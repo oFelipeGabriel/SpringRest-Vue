@@ -14,8 +14,7 @@ import javax.persistence.Table;
 
 
 
-@Entity
-@Table(name="prateleira")
+@Entity(name="prateleira")
 public class Prateleira implements Serializable{
 	
 	/**
