@@ -8,11 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,13 +19,14 @@ import br.gov.sp.fatec.estoque.models.Produto;
 import br.gov.sp.fatec.estoque.repository.ProdutoRepository;
 
 @RestController
+@Service("produtoRescource")
 @RequestMapping(value="/api")
 public class ProdutoRescources {
 	@Autowired
 	ProdutoRepository produtoRepository;
 	
 	@RequestMapping("/produto/{id}")
-	public ResponseEntity listaAlunoUnico(@PathVariable(value="id") long id){
+	public ResponseEntity listaProdutoUnico(@PathVariable(value="id") long id){
 		Produto p = produtoRepository.findById(id);
 		if(p == null) {
 			return ResponseEntity
@@ -39,27 +39,12 @@ public class ProdutoRescources {
 	}
 	
 	@CrossOrigin
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@Transactional
 	@GetMapping("/produtos")
-	@PreAuthorize("hasRole('ADMIN')")
-	public List<Produto> listaAlunos(){
+	public List<Produto> listaProdutos(){
 		return produtoRepository.findAll();
 	}
 	
-	@CrossOrigin
-	@PostMapping("/alunos")
-	@Transactional
-	public ResponseEntity salvaALuno(@RequestBody Produto produto) {
-		try {
-		produtoRepository.save(produto);
-		
-		return ResponseEntity
-				.status(HttpStatus.OK)
-				.body(produto);
-		}catch (Exception e) {
-			return ResponseEntity
-		            .status(HttpStatus.METHOD_NOT_ALLOWED)
-		            .body("Error Message");
-			}
-	}
 	
 }
