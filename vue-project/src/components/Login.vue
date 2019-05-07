@@ -5,7 +5,7 @@
                   <div class="column is-4 is-offset-4">
                       <h3 class="title has-text-grey">Login</h3>
                       <p class="subtitle has-text-grey">Faça login para continuar</p>
-                      <img class="is-rounded" style="border-radius: 50%; margin-bottom: 20px" src="https://bulma.io/images/placeholders/128x128.png">
+                      <img class="is-rounded" style="border-radius: 50%; margin-bottom: 20px" src="../assets/login.gif">
                       <div class="box">
                           
                           <form>
