@@ -1,7 +1,6 @@
-package br.gov.sp.fatec.estoque.security;
+package br.gov.sp.fatec.security;
 
 import java.io.IOException;
-import java.util.Collection;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -12,12 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
 
-import br.gov.sp.fatec.estoque.models.Usuario;
-
+import br.gov.sp.fatec.model.Usuario;
 
 public class JwtAuthenticationFilter extends GenericFilterBean {
 
@@ -31,7 +28,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
             String authorization = servletRequest.getHeader(HEADER);
             if (authorization != null) {
                 Usuario usuario = JwtUtils.parseToken(authorization.replaceAll("Bearer ", ""));
-                Authentication credentials = new UsernamePasswordAuthenticationToken(usuario.getUsername(), usuario.getSenha(), (Collection<? extends GrantedAuthority>) usuario.getAutorizacoes());
+                Authentication credentials = new UsernamePasswordAuthenticationToken(usuario.getUsername(), usuario.getPassword(), usuario.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(credentials);
             }
             chain.doFilter(request, response);

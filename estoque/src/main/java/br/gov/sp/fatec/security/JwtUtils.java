@@ -1,4 +1,4 @@
-package br.gov.sp.fatec.estoque.security;
+package br.gov.sp.fatec.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -6,13 +6,12 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import java.io.IOException;
 import java.util.Date;
 
+import br.gov.sp.fatec.model.Usuario;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import br.gov.sp.fatec.estoque.models.Usuario;
 
 public class JwtUtils {
     

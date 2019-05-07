@@ -1,6 +1,4 @@
-package br.gov.sp.fatec.estoque.security;
-
-import javax.servlet.Filter;
+package br.gov.sp.fatec.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
@@ -21,17 +18,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserDetailsService userDetailsService;
-	
-	@Bean
-	public UserDetailsService userDetailsService() {
-	    return super.userDetailsService();
-	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable()
-				.addFilterBefore((Filter) new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-				.exceptionHandling().authenticationEntryPoint((AuthenticationEntryPoint) new RestAuthenticationEntryPoint())
+				.addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+				.exceptionHandling().authenticationEntryPoint(new RestAuthenticationEntryPoint())
 				.and()
 				// this disables session creation on Spring Security
 				.sessionManagement()

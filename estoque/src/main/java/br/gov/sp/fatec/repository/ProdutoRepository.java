@@ -1,10 +1,11 @@
-package br.gov.sp.fatec.estoque.repository;
+package br.gov.sp.fatec.repository;
+
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import br.gov.sp.fatec.estoque.models.Produto;
+import br.gov.sp.fatec.model.Produto;
 
 public interface ProdutoRepository extends JpaRepository<Produto, Long>{
 	Produto findById(long id);

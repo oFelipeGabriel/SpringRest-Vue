@@ -1,4 +1,5 @@
-package br.gov.sp.fatec.estoque.models;
+package br.gov.sp.fatec.model;
+
 
 import java.io.Serializable;
 import java.sql.Date;
