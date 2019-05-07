@@ -3,7 +3,7 @@
 <!-- Início tela de Admin !-->
 <div>
     <!-- Início caixa de busca !-->
-    <div style="background-color: #a1e3ff" class="hero">
+    <div style="background-color: #a1e3ff; " class="hero">
         <div class="hero-body">
             <div class="container">
                 <h1 style="font-size: 25px"> Pesquise algum item.. </h1>
@@ -48,7 +48,7 @@
 		
 				</div>
 				<div class="column is-8">
-
+                    <h1 style="font-size:25px; padding-bottom: 15px" align="center"> Lista de items </h1>
                     <!-- Aplicar loop aqui!-->
 					<div class="box content">
                         <table>
