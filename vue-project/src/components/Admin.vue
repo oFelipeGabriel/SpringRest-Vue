@@ -3,7 +3,7 @@
 <!-- Início tela de Admin !-->
 <div>
     <!-- Início caixa de busca !-->
-    <div class="hero is-success">
+    <div style="background-color: #a1e3ff" class="hero">
         <div class="hero-body">
             <div class="container">
                 <h1 style="font-size: 25px"> Pesquise algum item.. </h1>
