@@ -28,14 +28,23 @@
     <!-- Final caixa de busca !-->
     <div class="container">
 			<div class="columns">
-				<div class="column is-2">
+				<div class="column is-3">
+                    <!-- Botão de add produto !-->
 					<a class="button is-success is-block is-alt is-large" href="#">
                         <span class="icon">
                             <i class="fa fa-inbox"></i>
                         </span>
                         <span>Novo produto</span>
                     </a>
-                    <a class="button is-danger is-block is-alt is-large" href="#">Fora da validade</a>
+                    <br>
+                    <!-- Botão de verificar produtos fora da validade !-->
+                    <a class="button is-danger is-block is-alt is-large" href="#">
+                       <span class="icon">
+                            <i class="fa fa-inbox"></i>
+                        </span>
+                    
+                        <span>Fora da Validade</span>
+                    </a>
 		
 				</div>
 				<div class="column is-8">
@@ -51,9 +60,9 @@
                                         <p style="font-size: 18px" class="tag">300g | Fabricação: 07/05/2019 | Validade: 11/05/2019 </p>
 									</div>
 								</div>
-								<div class="media-right">
-									<span class="has-text-grey-light"><i class="fa fa-comments"></i> 1</span>
-								</div>
+                                <!-- Botão de editar !-->
+								<span class="button is-danger"> Editar</span>
+                                 <!-- Botão de editar !-->
 							</div>
 						</article>
 					</div>
