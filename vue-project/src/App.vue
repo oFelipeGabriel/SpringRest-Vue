@@ -1,28 +1,46 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <nav id="nav" class="navbar has-shadow">
+        <div class="container">
+            <div class="navbar-brand">
+                <a class="navbar-item brand-text" href="/"> GPP ALPHA BETA </a>
+                <div class="navbar-burger burger" data-target="navMenu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <div id="navMenu" class="navbar-menu">
+                <div class="navbar-start">
+                    <router-link to="/" class="navbar-item">Home</router-link> 
+                    <a class="navbar-item" v-if="usuario" @click="logout">Logout</a>
+                    <router-link v-if="!usuario" to="/login" class="navbar-item">Login</router-link>
+                </div>
+                
+            </div>
+        </div>
+        
+    </nav>
+    <router-view/>
+</div>
+
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { mapState } from 'vuex'
+import { mapMutations } from 'vuex'
 
 export default {
   name: 'app',
-  components: {
-    HelloWorld
+  computed: {
+    ...mapState([
+      'usuario'
+    ])
+  },
+  methods: {
+    ...mapMutations([
+      'logout'
+    ])
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
