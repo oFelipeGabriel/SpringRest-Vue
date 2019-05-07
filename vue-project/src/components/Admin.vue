@@ -51,20 +51,26 @@
 
                     <!-- Aplicar loop aqui!-->
 					<div class="box content">
-                        
-						<article  style="padding-bottom: 15px;" class="post has-shadow">
-							<h3>Iogurte Vigor</h3>
-							<div class="media">
-								<div class="media-content">
-									<div class="content">
-                                        <p style="font-size: 18px" class="tag">300g | Fabricação: 07/05/2019 | Validade: 11/05/2019 </p>
-									</div>
-								</div>
-                                <!-- Botão de editar !-->
-								<span class="button is-danger"> Editar</span>
-                                 <!-- Botão de editar !-->
-							</div>
-						</article>
+                        <table>
+                            <tr v-for="produto in produtos" :key="produto.id">
+                                <article  style="padding-bottom: 10px;" class="post has-shadow">
+                                    <h3>{{ produto.nome }}</h3>
+                                    <div class="media">
+                                        <div class="media-content">
+                                            <div class="content">
+                                                <p style="font-size: 18px"> Fornecedor:
+                                                    {{ produto.fornecedor }} 
+                                                    <br> 
+                                                    Validade: {{ produto.validade }} </p>
+                                            </div>
+                                        </div>
+                                        <!-- Botão de editar !-->
+                                        <span class="button is-danger"> Editar</span>
+                                        <!-- Botão de editar !-->
+                                    </div>
+                                </article>
+                            </tr>
+                        </table>
 					</div>
                      <!-- Final do loop !-->
 				</div>
@@ -78,5 +84,50 @@
 </template>
 
 <script>
+import axios from 'axios'
+import { mapState } from 'vuex'
 
+export default {
+  name: 'anotacoes',
+  data() {
+    return {
+      assunto: '',
+      texto: '',
+      anotacoes: []
+    }
+  },
+  computed: {
+    ...mapState([
+      'usuario'
+    ])
+  },
+  methods: {
+    cadastrar() {
+      axios.post('anotacao/save',
+          {
+            assunto: this.assunto,
+            texto: this.texto,
+            usuario: this.usuario
+          })
+        .then(res => {
+          this.assunto = ''
+          this.texto = ''
+          this.atualizar()
+        })
+        .catch(error => console.log(error))
+    },
+    atualizar () {
+      axios.get('/anotacao/getAll', 
+          { headers: { Accept: 'application/json' } })
+        .then(res => {
+          console.log(res)
+          this.anotacoes = res.data
+        })
+        .catch(error => console.log(error))
+    }
+  },
+  created () {
+    this.atualizar()
+  }
+}
 </script>

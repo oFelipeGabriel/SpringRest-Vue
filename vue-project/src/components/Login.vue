@@ -8,10 +8,10 @@
                       <img class="is-rounded" style="border-radius: 50%; margin-bottom: 20px" src="../assets/login.gif">
                       <div class="box">
                           
-                          <form>
+                          <form @submit.prevent="login">
                               <div class="field">
                                   <div class="control">
-                                      <input class="input is-large" name="usernmae" type="text" placeholder="Your Username" required autofocus v-model="nome">
+                                      <input class="input is-large" name="username" type="text" placeholder="Your Username" required autofocus v-model="nome">
                                   </div>
                               </div>
 
@@ -25,7 +25,6 @@
                           </form>
                       </div>
                       <p class="has-text-grey">
-                      
                           <a href="../">Precisa de ajuda?</a>
                       </p>
                   </div>
