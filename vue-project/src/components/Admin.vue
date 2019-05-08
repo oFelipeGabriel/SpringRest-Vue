@@ -3,10 +3,12 @@
 <!-- Início tela de Admin !-->
 <div>
     <!-- Início caixa de busca !-->
-    <div style="background-color: #a1e3ff; " class="hero">
-        <div class="hero-body">
-            <div class="container">
-                <h1 style="font-size: 25px"> Pesquise algum item.. </h1>
+   <v-parallax  height="300" src="https://cdn.vuetifyjs.com/images/parallax/material.jpg">
+
+        <div class="hero-body">  
+            <div align="center" class="container">
+                
+                <h1  align="center" style="font-size: 25px"> Pesquise algum item.. </h1>
                 <div class="card">
                     <div class="card-content">
                         <div class="content">
@@ -24,7 +26,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </v-parallax>
     <!-- Final caixa de busca !-->
     <div class="container">
 			<div class="columns">
@@ -88,7 +90,7 @@ import axios from 'axios'
 import { mapState } from 'vuex'
 
 export default {
-  name: 'anotacoes',
+  name: 'produtos',
   data() {
     return {
       assunto: '',
@@ -103,25 +105,25 @@ export default {
   },
   methods: {
     cadastrar() {
-      axios.post('anotacao/save',
+      axios.post('produto/save',
           {
-            assunto: this.assunto,
-            texto: this.texto,
-            usuario: this.usuario
+            nome: this.nome,
+            fornecedor: this.fornecedor,
+            validade: this.validade
           })
         .then(res => {
-          this.assunto = ''
-          this.texto = ''
+          this.nome = ''
+          this.fornecedor = ''
           this.atualizar()
         })
         .catch(error => console.log(error))
     },
     atualizar () {
-      axios.get('/anotacao/getAll', 
+      axios.get('/produto/getAll', 
           { headers: { Accept: 'application/json' } })
         .then(res => {
           console.log(res)
-          this.anotacoes = res.data
+          this.produtos = res.data
         })
         .catch(error => console.log(error))
     }

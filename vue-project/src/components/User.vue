@@ -23,33 +23,19 @@
             </div>
         </div>
         
-        <div class="container">
-            <h1 style="font-size:25px; padding-bottom: 15px" align="center"> Lista de items </h1>
-         <!-- Aplicar loop aqui!-->
-		<div class="box content">
-            
-            <table>
-                <tr v-for="produto in produtos" :key="produto.id">
-                    <article  style="padding-bottom: 10px;" class="post has-shadow">
-                        <h3>{{ produto.nome }}</h3>
-                            <div class="media">
-                                <div class="media-content">
-                                    <div class="content">
-                                        <p style="font-size: 18px"> Fornecedor:
-                                            {{ produto.fornecedor }} 
-                                            <br> 
-                                            Validade: {{ produto.validade }} 
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                    </article>
-                </tr>
-            </table>
-		</div>
-
-        </div>
-                     <!-- Final do loop !-->
+        <v-timeline>
+            <v-timeline-item v-for="n in 4" :key="n" color="orange lighten-3" large>
+                <v-card class="elevation-6">
+                    <v-card-title class="headline">Nome do produto</v-card-title>
+                    <v-card-text>
+                        Data de validade:
+                        <br>
+                        Fornecedor:
+                    </v-card-text>
+                </v-card>
+            </v-timeline-item>
+        </v-timeline>
+                    
     </div>
 
 </template>
