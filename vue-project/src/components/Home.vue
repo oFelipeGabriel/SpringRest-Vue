@@ -6,7 +6,7 @@
     >
       <v-flex style="padding-top: 140px" xs12>
         <v-img
-          :src="require('../assets/logotipo.svg')"
+          :src="require('../assets/logo.png')"
           class="my-3"
           contain
           height="200"
