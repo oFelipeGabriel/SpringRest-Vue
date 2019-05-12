@@ -26,18 +26,28 @@ SET time_zone = "+00:00";
 -- Estrutura da tabela `autorizacao`
 --
 
-CREATE TABLE `autorizacao` (
-  `id` bigint(20) NOT NULL,
-  `nome` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `usuario` (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  nome VARCHAR(20) NOT NULL,
+  senha VARCHAR(50) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY UNI_USUARIO_NOME (nome)
+);
 
---
--- Extraindo dados da tabela `autorizacao`
---
+CREATE TABLE autorizacao (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  nome VARCHAR(20) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY UNI_AUT_NOME (nome)
+);
 
-INSERT INTO `autorizacao` (`id`, `nome`) VALUES
-(1, 'admin');
-
+CREATE TABLE usuario_autorizacao (
+  usuario_id BIGINT UNSIGNED NOT NULL,
+  autorizacao_id BIGINT UNSIGNED NOT NULL,
+  PRIMARY KEY (usuario_id, autorizacao_id),
+  FOREIGN KEY AUT_USUARIO_FK (usuario_id) REFERENCES usuario (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY AUT_AUTORIZACAO_FK (autorizacao_id) REFERENCES autorizacao (id) ON DELETE RESTRICT ON UPDATE CASCADE
+);
 -- --------------------------------------------------------
 
 --
@@ -103,8 +113,6 @@ CREATE TABLE `usuario` (
 -- Extraindo dados da tabela `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `nome`, `senha`, `username`) VALUES
-(1, 'admin', 'admin', 'admin');
 
 --
 -- Indexes for dumped tables
@@ -161,3 +169,14 @@ ALTER TABLE `usuario`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+INSERT INTO usuario(nome, senha) VALUES('admin', CONCAT('{MD5}', MD5('admin')))
+INSERT INTO autorizacao(nome) VALUES('ROLE_USUARIO');
+INSERT INTO AUT_AUTORIZACAO(AUT_NOME) VALUES('ROLE_ADMIN');
+
+INSERT INTO UAU_USUARIO_AUTORIZACAO(USR_ID, AUT_ID) VALUES(
+(SELECT id FROM usuario WHERE nome = 'admin'),
+(SELECT id FROM autorizacao WHERE nome = 'ROLE_ADMIN'));
+
+CREATE USER IF NOT EXISTS 'newuser'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON estoque.* TO 'newuser'@'localhost';

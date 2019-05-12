@@ -15,45 +15,35 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import br.gov.sp.fatec.view.View;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonView;
 
-@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
-@Table(name = "USR_USUARIO")
+@Table(name = "usuario")
 public class Usuario implements UserDetails{
 
 	private static final long serialVersionUID = 1507218635788384719L;
 
 	@Id 
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "USR_ID")
-	@JsonView({View.UsuarioCompleto.class, View.UsuarioResumoAlternativo.class, View.Anotacao.class})
+    @Column(name = "id")
 	private Long id;
     
-    @Column(name = "USR_NOME", unique=true, length = 20, nullable = false)
-    @JsonView({View.UsuarioResumo.class, View.UsuarioResumoAlternativo.class, View.Anotacao.class})
+    @Column(name = "nome")
     private String nome;
     
-    @Column(name = "USR_SENHA", length = 50, nullable = false)
-    @JsonView(View.UsuarioCompleto.class)
+    @Column(name = "senha")
     private String senha;
     
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "UAU_USUARIO_AUTORIZACAO", 
-    	joinColumns = { @JoinColumn(name = "USR_ID") }, 
-    	inverseJoinColumns = { @JoinColumn(name = "AUT_ID") })
-    @JsonView({View.UsuarioResumo.class, View.UsuarioResumoAlternativo.class})
-    @XmlElement(name = "autorizacao")
+    @JoinTable(name = "usuario_autorizacao", 
+    	joinColumns = { @JoinColumn(name = "usuario_id") }, 
+    	inverseJoinColumns = { @JoinColumn(name = "autorizacao_id") })
     private List<Autorizacao> autorizacoes;
 
 	public Long getId() {
