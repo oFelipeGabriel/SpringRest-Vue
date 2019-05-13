@@ -25,6 +25,8 @@ SET time_zone = "+00:00";
 --
 -- Estrutura da tabela `autorizacao`
 --
+CREATE database estoque;
+USE estoque;
 
 CREATE TABLE `usuario` (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -84,33 +86,13 @@ CREATE TABLE `produto` (
 -- Estrutura da tabela `uau_usuario_autorizacao`
 --
 
-CREATE TABLE `uau_usuario_autorizacao` (
-  `aut_id` bigint(20) NOT NULL,
-  `user_id` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
 -- Extraindo dados da tabela `uau_usuario_autorizacao`
 --
-
-INSERT INTO `uau_usuario_autorizacao` (`aut_id`, `user_id`) VALUES
-(1, 1);
 
 -- --------------------------------------------------------
 
 --
 -- Estrutura da tabela `usuario`
---
-
-CREATE TABLE `usuario` (
-  `id` bigint(20) NOT NULL,
-  `nome` varchar(20) NOT NULL,
-  `senha` varchar(50) NOT NULL,
-  `username` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Extraindo dados da tabela `usuario`
 --
 
 
@@ -121,9 +103,6 @@ CREATE TABLE `usuario` (
 --
 -- Indexes for table `autorizacao`
 --
-ALTER TABLE `autorizacao`
-  ADD PRIMARY KEY (`id`);
-
 --
 -- Indexes for table `prateleira`
 --
@@ -139,9 +118,6 @@ ALTER TABLE `produto`
 --
 -- Indexes for table `usuario`
 --
-ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`id`);
-
 --
 -- AUTO_INCREMENT for dumped tables
 --
@@ -170,11 +146,11 @@ ALTER TABLE `usuario`
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
-INSERT INTO usuario(nome, senha) VALUES('admin', CONCAT('{MD5}', MD5('admin')))
+INSERT INTO usuario(nome, senha) VALUES('admin', CONCAT('{MD5}', MD5('admin')));
 INSERT INTO autorizacao(nome) VALUES('ROLE_USUARIO');
-INSERT INTO AUT_AUTORIZACAO(AUT_NOME) VALUES('ROLE_ADMIN');
+INSERT INTO autorizacao(nome) VALUES('ROLE_ADMIN');
 
-INSERT INTO UAU_USUARIO_AUTORIZACAO(USR_ID, AUT_ID) VALUES(
+INSERT INTO usuario_autorizacao(usuario_id, autorizacao_id) VALUES(
 (SELECT id FROM usuario WHERE nome = 'admin'),
 (SELECT id FROM autorizacao WHERE nome = 'ROLE_ADMIN'));
 

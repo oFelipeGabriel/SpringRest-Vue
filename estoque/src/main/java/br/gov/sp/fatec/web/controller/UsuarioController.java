@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,13 +15,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import br.gov.sp.fatec.model.Usuario;
 import br.gov.sp.fatec.service.UsuarioService;
 import br.gov.sp.fatec.view.View;
 
-import com.fasterxml.jackson.annotation.JsonView;
-
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/usuario")
 public class UsuarioController {
 	
@@ -30,13 +32,15 @@ public class UsuarioController {
 	public void setUsuarioService(UsuarioService usuarioService) {
 		this.usuarioService = usuarioService;
 	}
-	
+
+	@CrossOrigin
 	@RequestMapping(value = "/get/{nome}", method = RequestMethod.GET)
 	@JsonView(View.UsuarioCompleto.class)
 	public ResponseEntity<Collection<Usuario>> pesquisar(@PathVariable("nome") String nome) {
 		return new ResponseEntity<Collection<Usuario>>(usuarioService.buscar(nome), HttpStatus.OK);
 	}
-	
+
+	@CrossOrigin
 	@RequestMapping(value = "/getById", method = RequestMethod.GET)
 	@JsonView(View.UsuarioCompleto.class)
 	public ResponseEntity<Usuario> get(@RequestParam(value="id", defaultValue="1") Long id) {
@@ -46,13 +50,15 @@ public class UsuarioController {
 		}
 		return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
 	}
-	
+
+	@CrossOrigin
 	@RequestMapping(value = "/getAll", method = RequestMethod.GET)
 	@JsonView(View.UsuarioResumoAlternativo.class)
 	public ResponseEntity<Collection<Usuario>> getAll() {
 		return new ResponseEntity<Collection<Usuario>>(usuarioService.todos(), HttpStatus.OK);
 	}
-	
+
+	@CrossOrigin
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@JsonView(View.UsuarioCompleto.class)
 	public ResponseEntity<Usuario> save(@RequestBody Usuario usuario, UriComponentsBuilder uriComponentsBuilder) {

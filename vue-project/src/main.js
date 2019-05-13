@@ -6,7 +6,7 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 
-axios.defaults.baseURL = 'http://localhost:8082/springRestSecurity'
+axios.defaults.baseURL = 'http://localhost:8082'
 
 axios.interceptors.request.use(config => {
   if(store.state.token) {
@@ -25,7 +25,7 @@ axios.interceptors.response.use(res => {
       router.push('/login')
     }
     throw error
-})
+}) 
 
 Vue.config.productionTip = false
 

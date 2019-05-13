@@ -22,6 +22,7 @@ import br.gov.sp.fatec.security.Login;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 @RestController
+@CrossOrigin
 public class LoginController {
     
     @Autowired
@@ -38,8 +39,9 @@ public class LoginController {
     	this.segurancaService = segurancaService;
     }
     
-    @RequestMapping(path = "/login", method = RequestMethod.POST)
-    @CrossOrigin(exposedHeaders = "Token")
+
+    @CrossOrigin
+    @RequestMapping(path = "/login", method = RequestMethod.POST)    
     public ResponseEntity<Usuario> login(@RequestBody Login login, HttpServletResponse response) throws JsonProcessingException {
         Authentication credentials = new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword());
         Usuario usuario = (Usuario) auth.authenticate(credentials).getPrincipal();

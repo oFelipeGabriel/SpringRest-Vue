@@ -36,7 +36,13 @@
 <script>
 import axios from 'axios'
 import { mapMutations } from 'vuex'
-
+export const AXIOS = axios.create({
+  baseURL: 'http://localhost:8082',
+  headers: {
+    'Access-Control-Allow-Origin': 'localhost:8080',
+    'Content-Type':'application/json'
+  }
+})
 export default {
   name: 'login',
   data() {
@@ -51,7 +57,7 @@ export default {
       'setToken'
     ]),
     login() {
-      axios.post('login',
+      axios.post('springRest/login/',
           {
             username: this.nome,
             password: this.senha
@@ -60,7 +66,7 @@ export default {
           console.log(res)
           this.setUsuario(res.data)
           this.setToken(res.headers.token)
-          this.$router.push('/')
+          //this.$router.push('/')
         })
         .catch(error => console.log(error))
     }

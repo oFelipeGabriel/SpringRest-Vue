@@ -21,8 +21,8 @@ import br.gov.sp.fatec.view.View;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @RestController
-@RequestMapping(value = "/autorizacao")
 @CrossOrigin
+@RequestMapping(value = "/autorizacao")
 public class AutorizacaoController {
 	
 	@Autowired
@@ -32,12 +32,14 @@ public class AutorizacaoController {
 		this.autorizacaoService = autorizacaoService;
 	}
 	
+	@CrossOrigin
 	@RequestMapping(value = "/get/{nome}", method = RequestMethod.GET)
 	@JsonView(View.Anotacao.class)
 	public ResponseEntity<Collection<Autorizacao>> pesquisar(@PathVariable("nome") String nome) {
 		return new ResponseEntity<Collection<Autorizacao>>(autorizacaoService.buscar(nome), HttpStatus.OK);
 	}
 	
+	@CrossOrigin
 	@RequestMapping(value = "/getById/{id}", method = RequestMethod.GET)
 	@JsonView(View.Anotacao.class)
 	public ResponseEntity<Autorizacao> pesquisarPorId(@PathVariable("id") Long id) {

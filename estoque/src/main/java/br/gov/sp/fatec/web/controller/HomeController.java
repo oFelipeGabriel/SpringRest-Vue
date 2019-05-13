@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin
 public class HomeController {
-	
+
+	@CrossOrigin
 	@RequestMapping(value = "/")
 	public String hello() {
 		return "Olá";
