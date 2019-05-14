@@ -35,14 +35,12 @@ public class UsuarioController {
 
 	@CrossOrigin
 	@RequestMapping(value = "/get/{nome}", method = RequestMethod.GET)
-	@JsonView(View.UsuarioCompleto.class)
 	public ResponseEntity<Collection<Usuario>> pesquisar(@PathVariable("nome") String nome) {
 		return new ResponseEntity<Collection<Usuario>>(usuarioService.buscar(nome), HttpStatus.OK);
 	}
 
 	@CrossOrigin
 	@RequestMapping(value = "/getById", method = RequestMethod.GET)
-	@JsonView(View.UsuarioCompleto.class)
 	public ResponseEntity<Usuario> get(@RequestParam(value="id", defaultValue="1") Long id) {
 		Usuario usuario = usuarioService.buscar(id);
 		if(usuario == null) {
@@ -53,14 +51,12 @@ public class UsuarioController {
 
 	@CrossOrigin
 	@RequestMapping(value = "/getAll", method = RequestMethod.GET)
-	@JsonView(View.UsuarioResumoAlternativo.class)
 	public ResponseEntity<Collection<Usuario>> getAll() {
 		return new ResponseEntity<Collection<Usuario>>(usuarioService.todos(), HttpStatus.OK);
 	}
 
 	@CrossOrigin
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	@JsonView(View.UsuarioCompleto.class)
+	@RequestMapping(value = "/novoUsuario", method = RequestMethod.POST)
 	public ResponseEntity<Usuario> save(@RequestBody Usuario usuario, UriComponentsBuilder uriComponentsBuilder) {
 		usuario = usuarioService.salvar(usuario);
 		HttpHeaders responseHeaders = new HttpHeaders();

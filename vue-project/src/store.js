@@ -15,7 +15,8 @@ export default new Vuex.Store({
   ],
   state: {
     usuario: null,
-    token: null
+    token: null,
+    temToken: false
   },
   mutations: {
     setUsuario (state, usuario) {
@@ -23,13 +24,17 @@ export default new Vuex.Store({
     },
     setToken (state, token)  {
       state.token = token
+      state.temToken = true
     },
     logout (state) {
       state.token = null
       state.usuario = null
+      state.temToken = false
     }
   },
   actions: {
-
+    temAcesso:()=>{
+      localStorage.getItem('temToken')
+    }
   }
 })

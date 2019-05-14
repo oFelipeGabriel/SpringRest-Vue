@@ -19,6 +19,7 @@ axios.interceptors.response.use(res => {
   }, error => {
     if(error.response.status === 403) {
       alert('Não autorizado!')
+      router.push('/login')
     }
     else if (error.response.status === 401) {
       store.commit('logout')
@@ -32,5 +33,6 @@ Vue.config.productionTip = false
 new Vue({
   router,
   store,
+  
   render: h => h(App)
 }).$mount('#app')

@@ -12,7 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.gov.sp.fatec.model.Produto;
@@ -37,6 +40,14 @@ public class ProdutoResources {
 					.status(HttpStatus.OK)
 					.body(p);
 	}
+	
+	@CrossOrigin
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value = "/novoProduto", method = RequestMethod.POST)
+	public Produto novoProduto(@RequestBody Produto p){
+		return produtoRepository.save(p);
+	}
+	
 	
 	@CrossOrigin
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
