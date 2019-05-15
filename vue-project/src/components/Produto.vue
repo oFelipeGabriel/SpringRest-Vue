@@ -22,7 +22,7 @@ export default{
             nome: '',
             fornecedor: '',
             validade: '',
-            tempretatura: '',
+            temperatura: '',
         }
     },
     methods:{
@@ -31,12 +31,24 @@ export default{
             p.nome = this.nome;
             p.fornecedor = this.fornecedor;
             p.periodo_validade = this.validade;
-            p.temp_armazemnagem = this.tempretatura;
-            axios.post('/springRest/api/novoProduto',p,{headers: {'Authorization':}}).then(res =>{
+            p.temp_armazemnagem = this.temperatura;
+            console.log(this.token);
+            var header = {
+                'Access-Control-Allow-Origin': 'http://localhost:8080',
+                'Token': this.token
+            }
+            axios.post('/springRest/api/novoProduto',p,header).then(res =>{
                 console.log('ok',res)
             }).catch(error =>{
                 console.log('erro',error)
             })
+        }
+    },
+    computed:{
+        token:{
+            get(){
+                return this.$store.state.token;
+            }
         }
     }
 }

@@ -35,7 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				// this disables session creation on Spring Security
 				.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		//http.cors();
+		http.cors();
 	}
 
 	@Override

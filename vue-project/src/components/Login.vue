@@ -56,16 +56,22 @@ export default {
       'setToken'
     ]),
     login() {
-      axios.post('/springRest/login',
+      axios.post('/springRest/logando',
           {
             username: this.nome,
             password: this.senha
+          },
+          {
+            headers:{
+              "Content-type":"application/json"
+            }
           })
         .then(res => {
           console.log(res)
           this.setUsuario(res.data)
           this.setToken(res.headers.token)
-          this.$router.push('/')
+          console.log(this.$store.state.token);
+          //this.$router.push('/')
         })
         .catch(error => console.log(error))
     }
