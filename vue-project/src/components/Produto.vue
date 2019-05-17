@@ -35,10 +35,12 @@ export default{
             console.log(this.token);
             var header = {
                 'Access-Control-Allow-Origin': 'http://localhost:8080',
-                'Token': this.token
+                'Token': 'Baerer '+this.token
             }
             axios.post('/springRest/api/novoProduto',p,header).then(res =>{
-                console.log('ok',res)
+                console.log('ok',res);
+                this.$emit('cadastrado');
+                //this.$router.push('/Admin')
             }).catch(error =>{
                 console.log('erro',error)
             })

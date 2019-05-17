@@ -12,6 +12,8 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long>{
 	
 	Produto findTop1ByNome(String nome);
 	
+	List<Produto> findByNomeContaining(String nome);
+	
 	List<Produto> findByFornecedor(String fornecedor);
 	
 	List<Produto> findAll();

@@ -13,8 +13,9 @@
             <div id="navMenu" class="navbar-menu">
                 <div class="navbar-start">
                     <router-link to="/" class="navbar-item">Home</router-link>
-                    <router-link to="/Produto" class="navbar-item">Produto</router-link> 
+                    <router-link  v-if="usuario" to="/Produto" class="navbar-item">Produto</router-link> 
                     <a class="navbar-item" v-if="usuario" @click="logout">Logout</a>
+                    <router-link to="/Admin" class="navbar-item">Gerenciar</router-link>
                     <router-link v-if="!usuario" to="/login" class="navbar-item">Login</router-link>
                 </div>
                 

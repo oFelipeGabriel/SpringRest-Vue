@@ -13,7 +13,7 @@
                     <div class="card-content">
                         <div class="content">
                             <div class="control has-icons-left has-icons-right">
-                                <input class="input is-large" type="search">
+                                <input class="input is-large" type="search" v-model="busca" v-on:change="buscar">
                                 <span class="icon is-medium is-left">
                                     <i class="fa fa-search"></i>
                                 </span>
@@ -32,7 +32,7 @@
 			<div class="columns">
 				<div class="column is-3">
                     <!-- Botão de add produto !-->
-					<a class="button is-success is-block is-alt is-large" href="#">
+					<a class="button is-success is-block is-alt is-large" @click="dialog=true">
                         <span class="icon">
                             <i class="fa fa-inbox"></i>
                         </span>
@@ -40,7 +40,7 @@
                     </a>
                     <br>
                     <!-- Botão de verificar produtos fora da validade !-->
-                    <a class="button is-danger is-block is-alt is-large" href="#">
+                    <a class="button is-danger is-block is-alt is-large" href="/User">
                        <span class="icon">
                             <i class="fa fa-inbox"></i>
                         </span>
@@ -63,7 +63,7 @@
                                                 <p style="font-size: 18px"> Fornecedor:
                                                     {{ produto.fornecedor }} 
                                                     <br> 
-                                                    Validade: {{ produto.validade }} </p>
+                                                    Validade: {{ produto.periodo_validade }} </p>
                                             </div>
                                         </div>
                                         <!-- Botão de editar !-->
@@ -78,7 +78,38 @@
 				</div>
 			</div>
 		</div>
-    
+    <!-- modal produto -->
+  <div class="text-xs-center">
+    <v-dialog
+      v-model="dialog"
+      width="500"
+    >
+
+      <v-card>
+        <v-card-title
+          class="headline grey lighten-2"
+          primary-title
+        >
+          Privacy Policy
+        </v-card-title>
+
+        <Produto @cadastrado="cadastrou"></Produto>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="primary"
+            flat
+            @click="dialog = false"
+          >
+            I accept
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </div>
     
 
 </div>
@@ -88,14 +119,25 @@
 <script>
 import axios from 'axios'
 import { mapState } from 'vuex'
+import Produto from './Produto'
 
 export default {
-  name: 'produtos',
+  //name: 'produtos',
+  components: {
+      Produto
+    },
   data() {
     return {
+      header: {
+                'Access-Control-Allow-Origin': 'http://localhost:8080',
+                'Token': 'Baerer '+this.token
+            },
       assunto: '',
       texto: '',
-      anotacoes: []
+      anotacoes: [],
+      produtos:[],
+      busca: '',
+      dialog: false
     }
   },
   computed: {
@@ -118,8 +160,26 @@ export default {
         })
         .catch(error => console.log(error))
     },
+    cadastrou(){
+      this.dialog = false;
+      this.atualizar();
+    },
+    buscar(){
+      console.log(this.token);
+      if(this.busca != ""){
+        axios.get('springRest/api/busca/'+this.busca, 
+          this.header )
+        .then(res => {
+          console.log(res)
+          this.produtos = res.data
+        })
+        .catch(error => console.log(error))
+      }else{
+        this.atualizar();
+      }
+    },    
     atualizar () {
-      axios.get('/produto/getAll', 
+      axios.get('springRest/api/produtos', 
           { headers: { Accept: 'application/json' } })
         .then(res => {
           console.log(res)
@@ -130,6 +190,13 @@ export default {
   },
   created () {
     this.atualizar()
-  }
+  },
+  computed:{
+        token:{
+            get(){
+                return this.$store.state.token;
+            }
+        }
+    }
 }
 </script>

@@ -48,6 +48,12 @@ public class ProdutoResources {
 		return produtoRepository.save(p);
 	}
 	
+	@CrossOrigin
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping(value = "/busca/{nome}")
+	public List<Produto> buscaPorNome(@PathVariable(value="nome") String nome){
+		return produtoRepository.findByNomeContaining(nome);
+	}
 	
 	@CrossOrigin
 	@PreAuthorize("hasRole('ROLE_ADMIN')")

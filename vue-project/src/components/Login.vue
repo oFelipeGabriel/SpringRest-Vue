@@ -71,7 +71,7 @@ export default {
           this.setUsuario(res.data)
           this.setToken(res.headers.token)
           console.log(this.$store.state.token);
-          //this.$router.push('/')
+          this.$router.push('/Admin')
         })
         .catch(error => console.log(error))
     }
