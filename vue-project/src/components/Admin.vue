@@ -30,6 +30,11 @@
     <!-- Final caixa de busca !-->
     <div class="container">
 			<div class="columns">
+        <v-alert
+          :value="alert"
+          type="success">
+      Produto adicionado com sucesso :)
+        </v-alert>
 				<div class="column is-3">
                     <!-- Botão de add produto !-->
 					<a class="button is-success is-block is-alt is-large" @click="dialog=true">
@@ -137,7 +142,8 @@ export default {
       anotacoes: [],
       produtos:[],
       busca: '',
-      dialog: false
+      dialog: false,
+      alert: false
     }
   },
   computed: {
@@ -163,6 +169,7 @@ export default {
     cadastrou(){
       this.dialog = false;
       this.atualizar();
+      this.alert = true;
     },
     buscar(){
       console.log(this.token);
