@@ -1,24 +1,32 @@
 <template>
-    <div>
-        <label>Nome:</label>
-        <input type="text" v-model="nome"><br>
-        <label>Fornecedor:</label>
-        <input type="text" v-model="fornecedor"><br>
-        <label>Período de validade:</label>
-        <input type="number" v-model="validade"><br>
-        <label>Temperatura de armazenagem:</label>
-        <input type="number" v-model="temperatura"><br>
+<section class="section">
+    <div class="box has-text-centered is-3">
+        <div class="form-control">
+            <label class="label">Nome:</label>
+            <input class="input" type="text" v-model="nome">
+        </div>
+        <div class="form-control">
+        <label class="label">Fornecedor:</label>
+        <input class="input" type="text" v-model="fornecedor">
+        </div>
+        <div class="form-control-5">
+        <label class="label">Período de validade:</label>
+        <input class="input" type="number" v-model="validade">
+        </div>
+        <div class="form-control-5 pl-3">
+        <label class="label">Temperatura de armazenagem:</label>
+        <input class="input" type="number" v-model="temperatura">
+        </div>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn
-            color="primary"
-            flat
-             @click="cadastrar"
-          >
-           Cadastrar
-          </v-btn>
+          <span
+            class="botao-cadastrar"
+            @click="cadastrar"
+          >Cadastrar
+          </span>
           </v-card-actions>
     </div>
+    </section>
 
 </template>
 
@@ -85,3 +93,33 @@ export default{
     }
 }
 </script>
+
+<style>
+.form-control{
+    width: 100%;
+}
+.form-control label, .form-control-5 label{
+    width: 100%;
+    text-align: left;
+    font-size: .9em;
+}
+.form-control-5{
+    width: 50%;
+    float: left;
+}
+.form-control-5 input{
+    width:100%;
+}
+.pl-3{
+    padding-left: 10px;
+}
+.botao-cadastrar{
+    background-color: #3aa56e;
+    color: white;
+    cursor: pointer;
+    padding: 5px 8px;
+    border-radius: 7px;
+    margin-top: 10px;
+}
+
+</style>

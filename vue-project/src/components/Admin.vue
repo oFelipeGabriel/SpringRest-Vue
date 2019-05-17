@@ -73,7 +73,7 @@
                                                 <p style="font-size: 18px"> Fornecedor:
                                                     {{ produto.fornecedor }} 
                                                     <br> 
-                                                    Validade: {{ produto.periodo_validade }} <br> </p>
+                                                    Validade: {{ produto.periodo_validade }} dias </p>
                                                     
                                             </div>
                                         </div>
@@ -82,7 +82,7 @@
                                         <span v-if="produto.temp_armazemnagem<=0" style="color:blue">{{ produto.temp_armazemnagem }} ºC</span>
                                         <span v-else style="color:red">{{ produto.temp_armazemnagem }} ºC</span> 
                                         </div>
-                                        <span class="button is-warning" @click="editar(produto)"> Editar</span>
+                                        <span class="button is-warning mr-3" @click="editar(produto)"> Editar</span>
                                         <span class="button is-danger" @click="deletar(produto.id)"> Deletar</span>
                                         <!-- Botão de editar !-->
                                     </div>
@@ -104,10 +104,10 @@
 
       <v-card>
         <v-card-title
-          class="headline grey lighten-2"
+          class="headline verde-padrao"
           primary-title
         >
-          Privacy Policy
+         Registro de Produto
         </v-card-title>
 
         <Produto @cadastrado="cadastrou" :produto="produto"></Produto>
@@ -227,3 +227,14 @@ export default {
     }
 }
 </script>
+
+<style>
+.verde-padrao{
+  background-color: #3aa56e;
+  font-weight: 700;
+  color: white;
+}
+.mr-3{
+  margin-right: .3em;
+}
+</style>
