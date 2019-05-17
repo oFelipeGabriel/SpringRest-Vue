@@ -30,11 +30,7 @@
     <!-- Final caixa de busca !-->
     <div class="container">
 			<div class="columns">
-        <v-alert
-          :value="alert"
-          type="success">
-      Produto adicionado com sucesso :)
-        </v-alert>
+        
 				<div class="column is-3">
                     <!-- Botão de add produto !-->
 					<a class="button is-success is-block is-alt is-large" @click="dialog=true">
@@ -55,6 +51,15 @@
 		
 				</div>
 				<div class="column is-8">
+         <!--  <v-alert class="notification is-success"
+          :value="alert"
+          dismissible
+          type="success">
+      Produto adicionado com sucesso :)
+        </v-alert> -->
+        <div class="notification is-success" v-show="alert">
+          Produto adicionado com sucesso :)
+        </div>
                     <h1 style="font-size:25px; padding-bottom: 15px" align="center"> Lista de items </h1>
                     <!-- Aplicar loop aqui!-->
 					<div class="box content">
@@ -68,11 +73,17 @@
                                                 <p style="font-size: 18px"> Fornecedor:
                                                     {{ produto.fornecedor }} 
                                                     <br> 
-                                                    Validade: {{ produto.periodo_validade }} </p>
+                                                    Validade: {{ produto.periodo_validade }} <br> </p>
+                                                    
                                             </div>
                                         </div>
                                         <!-- Botão de editar !-->
-                                        <span class="button is-danger"> Editar</span>
+                                        <div style="padding-right: 35px; font-size: 20px; font-weight: 500">
+                                        <span v-if="produto.temp_armazemnagem<=0" style="color:blue">{{ produto.temp_armazemnagem }} ºC</span>
+                                        <span v-else style="color:red">{{ produto.temp_armazemnagem }} ºC</span> 
+                                        </div>
+                                        <span class="button is-warning" @click="editar(produto)"> Editar</span>
+                                        <span class="button is-danger" @click="deletar(produto.id)"> Deletar</span>
                                         <!-- Botão de editar !-->
                                     </div>
                                 </article>
@@ -88,6 +99,7 @@
     <v-dialog
       v-model="dialog"
       width="500"
+      
     >
 
       <v-card>
@@ -98,20 +110,9 @@
           Privacy Policy
         </v-card-title>
 
-        <Produto @cadastrado="cadastrou"></Produto>
-
-        <v-divider></v-divider>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="primary"
-            flat
-            @click="dialog = false"
-          >
-            I accept
-          </v-btn>
-        </v-card-actions>
+        <Produto @cadastrado="cadastrou" :produto="produto"></Produto>
+  
+        
       </v-card>
     </v-dialog>
   </div>
@@ -143,7 +144,8 @@ export default {
       produtos:[],
       busca: '',
       dialog: false,
-      alert: false
+      alert: false,
+      produto: null,
     }
   },
   computed: {
@@ -169,7 +171,9 @@ export default {
     cadastrou(){
       this.dialog = false;
       this.atualizar();
-      this.alert = true;
+      this.alert = true; 
+      var self = this;    
+      setTimeout(function(){ this.alert = false; }.bind(self), 5000);
     },
     buscar(){
       console.log(this.token);
@@ -193,8 +197,24 @@ export default {
           this.produtos = res.data
         })
         .catch(error => console.log(error))
-    }
-  },
+    },
+    deletar(id){
+      var header = {
+                'Access-Control-Allow-Origin': 'http://localhost:8080',
+                'Token': 'Baerer '+this.token
+            }
+       axios.delete('springRest/api/deleteProduto/'+id, header)
+        .then(res => {
+          console.log(res);
+          this.atualizar();
+        })
+        .catch(error => console.log(error))
+    },
+    editar(produto){
+      this.produto = produto;
+      this.dialog = true;
+    },
+  },  
   created () {
     this.atualizar()
   },

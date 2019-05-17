@@ -63,11 +63,11 @@ public class Produto implements Serializable{
 		return serialVersionUID;
 	}
 
-	public int getTemp_armazenagem() {
+	public int getTemp_armazemnagem() {
 		return temp_armazemnagem;
 	}
 
-	public void setTemp_armazenagem(int temp_armazenagem) {
+	public void setTemp_armazemnagem(int temp_armazenagem) {
 		this.temp_armazemnagem = temp_armazenagem;
 	}
 	

@@ -16,5 +16,6 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long>{
 	
 	List<Produto> findByFornecedor(String fornecedor);
 	
-	List<Produto> findAll();
+	List<Produto> findAllByOrderByNomeAsc();
+	
 }

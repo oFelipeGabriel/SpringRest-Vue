@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -60,8 +61,27 @@ public class ProdutoResources {
 	@Transactional
 	@GetMapping("/produtos")
 	public List<Produto> listaProdutos(){
-		return produtoRepository.findAll();
+		return produtoRepository.findAllByOrderByNomeAsc();
 	}
 	
+	@CrossOrigin
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PutMapping("/editaProduto/{id}")
+	public Produto saveResource(@RequestBody Produto p,@PathVariable("id") int id) {
+		Produto prod = produtoRepository.findById(id);
+		prod.setNome(p.getNome());
+		prod.setFornecedor(p.getFornecedor());
+		prod.setPeriodo_validade(p.getPeriodo_validade());
+		prod.setTemp_armazemnagem(p.getTemp_armazemnagem());
+		return produtoRepository.save(prod);
+	}
 	
+	@CrossOrigin
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(path="/deleteProduto/{id}",method=RequestMethod.DELETE)
+	public ResponseEntity<Void> deleteById(@PathVariable long id) {
+		produtoRepository.deleteById(id);
+		return ResponseEntity.noContent().build();
+	 
+	}
 }
