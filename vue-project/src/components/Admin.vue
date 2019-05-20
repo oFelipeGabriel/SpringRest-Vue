@@ -33,7 +33,7 @@
         
 				<div class="column is-3">
                     <!-- Botão de add produto !-->
-					<a class="button is-success is-block is-alt is-large" @click="dialog=true">
+					<a class="button is-success is-block is-alt is-large" @click="novo">
                         <span class="icon">
                             <i class="fa fa-inbox"></i>
                         </span>
@@ -214,6 +214,10 @@ export default {
       this.produto = produto;
       this.dialog = true;
     },
+    novo(){
+      this.produto = null;
+      this.dialog = true;      
+    }
   },  
   created () {
     this.atualizar()

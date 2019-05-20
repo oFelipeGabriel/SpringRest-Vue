@@ -38,19 +38,18 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@Transactional
 	public Usuario incluirUsuario(String nome, String senha, String nomeAutorizacao) {
-		Autorizacao autorizacao = autorizacaoRepo.findByNome(nomeAutorizacao);
-		// Se nao existe
-		if(autorizacao == null) {
-			// Cria nova
-			autorizacao = new Autorizacao();
-			autorizacao.setNome(nomeAutorizacao);
-			autorizacaoRepo.save(autorizacao);
-		}
+		//Autorizacao autorizacao = autorizacaoRepo.findByNome(nomeAutorizacao);
+		
 		Usuario usuario = new Usuario();
 		usuario.setNome(nome);
 		usuario.setSenha(md5(senha));
 		usuario.setAutorizacoes(new ArrayList<Autorizacao>());
-		usuario.getAutorizacoes().add(autorizacao);
+		if(nomeAutorizacao.equals("ROLE_ADMIN")){
+			Autorizacao autorizacao = autorizacaoRepo.findByNome(nomeAutorizacao);
+			usuario.getAutorizacoes().add(autorizacao);			
+		}
+		Autorizacao autorizacao2 = autorizacaoRepo.findByNome("ROLE_USUARIO");
+		usuario.getAutorizacoes().add(autorizacao2);	
 		usuarioRepo.save(usuario);
 		return usuario;
 	}

@@ -30,9 +30,9 @@ const router = new Router({
       component: () => import('./views/User.vue')
     },
     {
-      path: '/Produto',
-      name: 'produto',
-      component: () => import('./views/Produto.vue')
+      path: '/Usuario',
+      name: 'usuario',
+      component: () => import('./views/Usuario.vue')
     }, 
   ]
   

@@ -83,11 +83,16 @@ export default{
     },
     watch:{
         produto(){
-            if(this.produto!=null){
+            if(this.produto!==null){
                 this.nome = this.produto.nome;
                 this.fornecedor = this.produto.fornecedor;
                 this.validade = this.produto.periodo_validade;
                 this.temperatura = this.produto.temp_armazemnagem;
+            }else{
+                this.nome = '';
+                this.fornecedor = '';
+                this.validade = '';
+                this.temperatura = '';
             }
         }
     }
