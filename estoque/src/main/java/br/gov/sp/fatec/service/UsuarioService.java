@@ -14,6 +14,8 @@ public interface UsuarioService {
 	
 	public List<Usuario> todos();
 	
+	public Usuario apagar(long id);
+	
 	public Usuario salvar(Usuario usuario);
 
 }

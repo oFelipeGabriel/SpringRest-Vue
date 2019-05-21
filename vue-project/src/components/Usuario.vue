@@ -58,6 +58,7 @@ export default{
             senha: '',
             is_admin: false,
             usuarios: [],
+            usuario: null
         }
     },
     methods:{
@@ -82,16 +83,49 @@ export default{
                 'Token': 'Baerer '+this.token
             }
             var body = {
-                'nome':this.nome,
-                'senha':this.senha,
-                'nomeAutorizacao':aut
+                nome:this.nome,
+                senha:this.senha,
+                nomeAutorizacao:aut
             } 
-            axios.post('/springRest/usuario/novoUsuario/',body,header).then(res =>{
-                    console.log(res);                    
+            if(this.usuario==null){
+            axios.post('/springRest/usuario/novoUsuario/',{nome:this.nome,senha:this.senha,nomeAutorizacao:aut},header).then(res =>{
+                    console.log(res);   
+                    this.atualizar();                 
                 }).catch(error =>{
                     console.log('erro',error)
                 })
+            } else {
+                    var usuario = new Object();
+                    usuario.nome = this.nome;
+                    usuario.senha = this.senha;
+                    axios.put('/springRest/usuario/editaUsuario/'+this.usuario.id, usuario,header).then(res =>{
+                    console.log(res);
+                    this.atualizar();
+                    this.usuario = null;
+                    }).catch(error =>{
+                        console.log('erro',error)
+                    })               
+
             }
+           
+        },
+        editar(usuario){
+            this.usuario = usuario; 
+            this.nome = usuario.nome;
+            this.senha = usuario.senha;           
+        },
+        deletar(id){
+        var header = {
+                    'Access-Control-Allow-Origin': 'http://localhost:8080',
+                    'Token': 'Baerer '+this.token
+                }
+        axios.delete('springRest/usuario/deleteUsuario/'+id, header)
+            .then(res => {
+            console.log(res);
+            this.atualizar();
+            })
+            .catch(error => console.log(error))
+        },
             
         
     },
@@ -102,21 +136,6 @@ export default{
             }
         }
     },
-    watch:{
-        produto(){
-            if(this.produto!==null){
-                this.nome = this.produto.nome;
-                this.fornecedor = this.produto.fornecedor;
-                this.validade = this.produto.periodo_validade;
-                this.temperatura = this.produto.temp_armazemnagem;
-            }else{
-                this.nome = '';
-                this.fornecedor = '';
-                this.validade = '';
-                this.temperatura = '';
-            }
-        }
-    },  
     created () {
         this.atualizar()
     },

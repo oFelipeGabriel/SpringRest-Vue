@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,6 +17,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,8 +27,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import br.gov.sp.fatec.model.Autorizacao;
+import br.gov.sp.fatec.model.Produto;
 import br.gov.sp.fatec.model.Usuario;
 import br.gov.sp.fatec.repository.AutorizacaoRepository;
 import br.gov.sp.fatec.repository.UsuarioRepository;
@@ -56,6 +60,8 @@ public class UsuarioController {
 		return new ResponseEntity<Collection<Usuario>>(usuarioService.buscar(nome), HttpStatus.OK);
 	}
 
+	
+	
 	@CrossOrigin
 	@RequestMapping(value = "/getById", method = RequestMethod.GET)
 	public ResponseEntity<Usuario> get(@RequestParam(value="id", defaultValue="1") Long id) {
@@ -84,14 +90,17 @@ public class UsuarioController {
 	@CrossOrigin
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/novoUsuario", method = RequestMethod.POST)
-	public ResponseEntity<Usuario> salvar(@RequestParam String nome, @RequestParam String senha,@RequestParam String nomeAutorizacao) {
+	public ResponseEntity<Usuario> salvar(@RequestBody ObjectNode json) {
 		//Autorizacao autorizacao = autorizacaoRepo.findByNome(nomeAutorizacao);
-		//String nome = request.getParameter("nome");
+		//String nome = nome.getParameter("nome");
 		//String senha = request.getParameter("senha");
 		//String nomeAutorizacao = request.getParameter("nomeAutorizacao");
+		String nome = json.get("nome").asText();
+		String senha = json.get("senha").asText();
+		String nomeAutorizacao = json.get("nomeAutorizacao").asText();
 		Usuario usuario = new Usuario();
+		System.out.println(senha);
 		usuario.setNome(nome);
-		System.out.print(nomeAutorizacao);
 		usuario.setSenha(md5(senha));
 		usuario.setAutorizacoes(new ArrayList<Autorizacao>());
 		if(nomeAutorizacao.equals("ROLE_ADMIN")){
@@ -104,6 +113,25 @@ public class UsuarioController {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		return new ResponseEntity<Usuario>(usuario, responseHeaders, HttpStatus.CREATED);
 	}
+
+	@CrossOrigin
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PutMapping("/editaUsuario/{id}")
+	public Usuario saveResource(@RequestBody Usuario u,@PathVariable("id") int id) {
+		Usuario usuario = usuarioRepo.findById(id);
+		usuario.setNome(u.getNome());
+		usuario.setSenha(u.getSenha());
+		return usuarioRepo.save(usuario);
+	}
+	
+	@CrossOrigin
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(path="/deleteUsuario/{id}",method=RequestMethod.DELETE)
+	public ResponseEntity<Void> deleteById(@PathVariable long id) {
+		usuarioService.apagar(id);
+		return ResponseEntity.noContent().build();
+	}
+	
 	private String md5(String senha) {
 		try {
 			MessageDigest algorithm = MessageDigest.getInstance("MD5");
