@@ -34,6 +34,11 @@ const router = new Router({
       name: 'usuario',
       component: () => import('./views/Usuario.vue')
     }, 
+    {
+      path: '/Estoque',
+      name: 'estoque',
+      component: () => import('./views/Estoque.vue')
+    }, 
   ]
   
 })
