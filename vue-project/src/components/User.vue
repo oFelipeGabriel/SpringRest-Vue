@@ -8,7 +8,7 @@
                         <div class="card-content">
                             <div class="content">
                                 <div class="control has-icons-left has-icons-right">
-                                    <input class="input is-large" type="search">
+                                     <input class="input is-large" type="search" v-model="busca" v-on:change="buscar">
                                     <span class="icon is-medium is-left">
                                         <i class="fa fa-search"></i>
                                     </span>
@@ -77,7 +77,6 @@ export default {
     ])
   },
   methods: {
-  
     buscar(){
       console.log(this.token);
       if(this.busca != ""){
