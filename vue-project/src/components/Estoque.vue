@@ -69,6 +69,15 @@ export default{
           this.estoque = res.data
         })
         .catch(error => console.log(error))
+         axios.get('springRest/api/produtos', 
+          { headers: { Accept: 'application/json',
+          'Access-Control-Allow-Origin': 'http://127.0.0.1:8080', } })
+        .then(res => {
+          console.log(res)
+          this.produtos = res.data
+        })
+        .catch(error => console.log(error))
+            
         /*
             axios.get('springRest/api/prateleiras', {headers: header})
                 .then(res => {
@@ -82,7 +91,8 @@ export default{
             console.log(this.produto);
              var header = {
                 'Access-Control-Allow-Origin': 'http://localhost:8080',
-                'Token': 'Baerer '+this.token
+                'Token': 'Baerer '+this.token,
+                'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
             };
             var e = Object();
             e.nota_fiscal = this.nota_fiscal;
@@ -91,6 +101,7 @@ export default{
             e.data_fabricacao = this.data_fabricacao;
             e.numero_lote = this.numero_lote;
             e.produto = this.produto;
+            console.log(header)
             axios.post('/springRest/api/novoEstoque',e,header).then(res =>{
                     console.log('ok',res);
                     this.nota_fiscal = '';
