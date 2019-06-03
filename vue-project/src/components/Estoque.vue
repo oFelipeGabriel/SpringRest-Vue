@@ -30,6 +30,7 @@
             <tr v-for="produto in estoque" :key="produto.id">
                 <article  style="padding-bottom: 10px;" class="post has-shadow">
                     <h3>{{ produto.produto.nome }}</h3>
+                    <h4>{{ produto.nota_fiscal }}</h4>
                     
                 </article>
             </tr>
@@ -62,18 +63,19 @@ export default{
                 'Access-Control-Allow-Origin': 'http://localhost:8080',
                 'Authorization:': 'Baerer '+this.token
             };
-            axios.get('springRest/apiEstoque/prateleiras', 
-          { headers: { Accept: 'application/json', 'Authorization:': 'Baerer '+this.token } })
+            axios.get('springRest/api/prateleiras', 
+          { headers: {'Access-Control-Allow-Origin': 'http://127.0.0.1:8080',
+                    'Authorization': 'Batata '+this.token } })
         .then(res => {
           console.log(res)
           this.estoque = res.data
         })
-        .catch(error => console.log(error))
+        .catch(error => console.log('erro', error))
          axios.get('springRest/api/produtos', 
           { headers: { Accept: 'application/json',
           'Access-Control-Allow-Origin': 'http://127.0.0.1:8080', } })
         .then(res => {
-          console.log(res)
+          //console.log(res)
           this.produtos = res.data
         })
         .catch(error => console.log(error))
@@ -123,7 +125,7 @@ export default{
         }
     },
     created () {
-        this.atualizar();
+        
              
     },
     mounted(){
@@ -135,6 +137,7 @@ export default{
             mm = "0"+mm.toString();
         }
         this.data_entrada = yy+"-"+mm+"-"+dd;
+        this.atualizar();
     }
 }
 </script>

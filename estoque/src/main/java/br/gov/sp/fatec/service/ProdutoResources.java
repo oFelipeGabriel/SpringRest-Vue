@@ -1,4 +1,4 @@
-package br.gov.sp.fatec.resource;
+package br.gov.sp.fatec.service;
 
 import java.io.Serializable;
 import java.util.List;
@@ -23,7 +23,7 @@ import br.gov.sp.fatec.model.Produto;
 import br.gov.sp.fatec.repository.ProdutoRepository;
 
 @RestController
-@Service("produtoRescource")
+@Service("produtoResource")
 @RequestMapping(value="/api")
 public class ProdutoResources {
 	@Autowired

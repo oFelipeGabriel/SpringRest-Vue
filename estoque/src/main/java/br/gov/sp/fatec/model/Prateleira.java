@@ -32,7 +32,7 @@ public class Prateleira implements Serializable{
     private Date data_fabricacao;
     private long numero_lote;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_produto")
     private Produto produto;
     

@@ -1,4 +1,4 @@
-package br.gov.sp.fatec.resource;
+package br.gov.sp.fatec.service;
 
 
 import java.util.List;
@@ -18,25 +18,30 @@ import org.springframework.web.bind.annotation.RestController;
 import br.gov.sp.fatec.model.Prateleira;
 import br.gov.sp.fatec.repository.PrateleiraRepository;
 
+
+
 @RestController
-@RequestMapping(value="/apiEstoque")
-public class PrateleiraResources {
-	
+@Service("prateleiraResource")
+@RequestMapping(value="/api")
+public class PrateleiraServiceImpl {
 	@Autowired
 	PrateleiraRepository prateleiraRepository;
 	
-	@CrossOrigin
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping("/prateleiras")
-	public List<Prateleira> listaPrateleiras(){
-		System.out.print( prateleiraRepository.findAll());
-		return prateleiraRepository.findAll();
-	}
 	
 	@CrossOrigin
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/novoEstoque", method = RequestMethod.POST)
-	public Prateleira novoProduto(@RequestBody Prateleira p){
+	public Prateleira novoPrateleira(@RequestBody Prateleira p){
 		return prateleiraRepository.save(p);
 	}
+	
+	
+	@CrossOrigin
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@Transactional
+	@GetMapping("/prateleiras")
+	public List<Prateleira> listaProdutos(){
+		return prateleiraRepository.findAll();
+	}
+	
 }

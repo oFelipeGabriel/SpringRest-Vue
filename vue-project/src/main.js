@@ -14,6 +14,7 @@ axios.interceptors.request.use(config => {
   }
   return config
 })
+/*
 axios.interceptors.response.use(res => {
     return res
   }, error => {
@@ -26,7 +27,7 @@ axios.interceptors.response.use(res => {
       router.push('/login')
     }
     throw error
-}) 
+}) */
 
 Vue.config.productionTip = false
 
