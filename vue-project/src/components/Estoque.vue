@@ -59,16 +59,16 @@ export default{
     },
     methods:{
         atualizar () {
-             var header = {
-                'Access-Control-Allow-Origin': 'http://localhost:8080',
-                'Authorization:': 'Baerer '+this.token
-            };
             axios.get('springRest/api/prateleiras', 
           { headers: {'Access-Control-Allow-Origin': 'http://127.0.0.1:8080',
                     'Authorization': 'Batata '+this.token } })
         .then(res => {
-          console.log(res)
-          this.estoque = res.data
+          //this.estoque = res.data
+          console.log(res.data)
+          for(var i=0;i<res.data.length;i++){
+              var data = new Date(res.data[i].data_entrada);
+              console.log((data.getDay()*1+1)+' '+(data.getMonth()*1+1)*1+' '+data.getFullYear());
+          }
         })
         .catch(error => console.log('erro', error))
          axios.get('springRest/api/produtos', 
@@ -90,7 +90,6 @@ export default{
             },
             
         cadastrar(){
-            console.log(this.produto);
              var header = {
                 'Access-Control-Allow-Origin': 'http://localhost:8080',
                 'Token': 'Baerer '+this.token,
