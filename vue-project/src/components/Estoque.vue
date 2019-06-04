@@ -26,16 +26,24 @@
     <h1 style="font-size:25px; padding-bottom: 15px" align="center"> Lista de items </h1>
     <!-- Aplicar loop aqui!-->
     <div class="box content">
-        <table>
-            <tr v-for="produto in estoque" :key="produto.id">
-                <article  style="padding-bottom: 10px;" class="post has-shadow">
-                    <h3>{{ produto.produto.nome }}</h3>
-                    <h4>{{ produto.nota_fiscal }}</h4>
-                    
-                </article>
-            </tr>
-        </table>
+       <v-timeline>
+            <v-timeline-item  v-for="produto in estoque" :key="produto.id" color="orange lighten-3" large>
+                <v-card class="elevation-6">
+                    <v-card-title class="headline">{{ produto.produto.nome }}</v-card-title>
+                    <v-card-text>
+                        Validade: {{ produto.periodo_validade.getDate() }} dias
+                        
+                        <br>
+                        Fornecedor: {{ produto.produto.fornecedor }}
+                    </v-card-text>
+                </v-card>
+            </v-timeline-item>
+            
+        </v-timeline>                   
     </div>
+
+ 
+
         <!-- Final do loop !-->
 </div>
 </section>
@@ -55,6 +63,7 @@ export default{
             data_entrada: '',
             data_fabricacao: '',
             numero_lote: '',
+            currentDate: new Date()
         }
     },
     methods:{
@@ -63,9 +72,19 @@ export default{
           { headers: {'Access-Control-Allow-Origin': 'http://127.0.0.1:8080',
                     'Authorization': 'Batata '+this.token } })
         .then(res => {
-          //this.estoque = res.data
+          this.estoque = res.data
+          
           console.log(res.data)
           for(var i=0;i<res.data.length;i++){
+              var p = res.data[i];
+              var potato = Object();
+              potato.nota_fiscal = p.nota_fiscal;
+              potato.data_nota_fiscal = new Date(p.data_nota_fiscal);
+              potato.data_entrada = new Date(p.data_entrada);
+              potato.data_fabricacao = new Date(p.data_fabricacao);
+              potato.numero_lote = p.numero_lote;
+              potato.produto = p.produto;
+              this.estoque.push(potato);
               var data = new Date(res.data[i].data_entrada);
               console.log((data.getDay()*1+1)+' '+(data.getMonth()*1+1)*1+' '+data.getFullYear());
           }
@@ -136,6 +155,7 @@ export default{
             mm = "0"+mm.toString();
         }
         this.data_entrada = yy+"-"+mm+"-"+dd;
+        
         this.atualizar();
     }
 }
