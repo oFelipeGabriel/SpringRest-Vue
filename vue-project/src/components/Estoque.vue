@@ -1,11 +1,7 @@
 <template>
 <section class="section">
     <div class="box has-text-centered is-3">
-<<<<<<< HEAD
     <h1>Estoque</h1>
-=======
-    <h1>estoque_un</h1>
->>>>>>> f0980d10361fed3396f42a8b91acbb58fc51952f
     <div class="select">
     <label class="label" for="produto">Produto: </label>
     <select class="select" v-model="produto">
@@ -25,35 +21,11 @@
     <input class="input" type="date" v-model="data_fabricacao"></div>
     <div class="control">
     <label class="label" for="numero_lote">Número do Lote</label>
-<<<<<<< HEAD
-    <input class="input" type="text" v-model="numero_lote"></div>
-=======
     <input class="input" type="number" v-model="numero_lote"></div>
->>>>>>> f0980d10361fed3396f42a8b91acbb58fc51952f
     <a class="button is-primary" @click="cadastrar">Cadastrar</a>
     <h1 style="font-size:25px; padding-bottom: 15px" align="center"> Lista de items </h1>
     <!-- Aplicar loop aqui!-->
     <div class="box content">
-<<<<<<< HEAD
-       <v-timeline>
-            <v-timeline-item  v-for="produto in estoque" :key="produto.id" color="orange lighten-3" large>
-                <v-card class="elevation-6">
-                    <v-card-title class="headline">{{ produto.produto.nome }}</v-card-title>
-                    <v-card-text>
-                        Validade: {{ produto.periodo_validade.getDate() }} dias
-                        
-                        <br>
-                        Fornecedor: {{ produto.produto.fornecedor }}
-                    </v-card-text>
-                </v-card>
-            </v-timeline-item>
-            
-        </v-timeline>                   
-    </div>
-
- 
-
-=======
         <table>
             <tr v-for="produto in estoque_un" :key="produto.id">
                 <article  style="padding-bottom: 10px;" class="post has-shadow">
@@ -68,7 +40,6 @@
             </tr>
         </table>
     </div>
->>>>>>> f0980d10361fed3396f42a8b91acbb58fc51952f
         <!-- Final do loop !-->
 </div>
 </section>
@@ -81,73 +52,19 @@ export default{
     data(){
         return{
             produto: null,
-<<<<<<< HEAD
-            estoque: [],
-=======
             estoque_un: [],
             estoque_or: [],
->>>>>>> f0980d10361fed3396f42a8b91acbb58fc51952f
             produtos: [],
             nota_fiscal: '',
             data_nota_fiscal: '',
             data_entrada: '',
             data_fabricacao: '',
             numero_lote: '',
-<<<<<<< HEAD
             currentDate: new Date()
-=======
->>>>>>> f0980d10361fed3396f42a8b91acbb58fc51952f
         }
     },
     methods:{
         atualizar () {
-<<<<<<< HEAD
-            axios.get('springRest/api/prateleiras', 
-          { headers: {'Access-Control-Allow-Origin': 'http://127.0.0.1:8080',
-                    'Authorization': 'Batata '+this.token } })
-        .then(res => {
-          this.estoque = res.data
-          
-          console.log(res.data)
-          for(var i=0;i<res.data.length;i++){
-              var p = res.data[i];
-              var potato = Object();
-              potato.nota_fiscal = p.nota_fiscal;
-              potato.data_nota_fiscal = new Date(p.data_nota_fiscal);
-              potato.data_entrada = new Date(p.data_entrada);
-              potato.data_fabricacao = new Date(p.data_fabricacao);
-              potato.numero_lote = p.numero_lote;
-              potato.produto = p.produto;
-              this.estoque.push(potato);
-              var data = new Date(res.data[i].data_entrada);
-              console.log((data.getDay()*1+1)+' '+(data.getMonth()*1+1)*1+' '+data.getFullYear());
-          }
-        })
-        .catch(error => console.log('erro', error))
-         axios.get('springRest/api/produtos', 
-          { headers: { Accept: 'application/json',
-          'Access-Control-Allow-Origin': 'http://127.0.0.1:8080', } })
-        .then(res => {
-          //console.log(res)
-          this.produtos = res.data
-        })
-        .catch(error => console.log(error))
-            
-        /*
-            axios.get('springRest/api/prateleiras', {headers: header})
-                .then(res => {
-                this.estoque = res.data;
-                console.log(res);
-                })
-                .catch(error => console.log(error))*/
-            },
-            
-        cadastrar(){
-             var header = {
-                'Access-Control-Allow-Origin': 'http://localhost:8080',
-                'Token': 'Baerer '+this.token,
-                'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
-=======
             
             axios.get('springRest/apiEstoque/prateleiras/', 
             { headers: { 
@@ -185,19 +102,10 @@ export default{
              var header = {
                 'Access-Control-Allow-Origin': '*',
                 'Token': 'Bearer '+this.token
->>>>>>> f0980d10361fed3396f42a8b91acbb58fc51952f
             };
             var e = Object();
             e.nota_fiscal = this.nota_fiscal;
             e.data_nota_fiscal = this.data_nota_fiscal;
-<<<<<<< HEAD
-            e.data_entrada = this.data_entrada;
-            e.data_fabricacao = this.data_fabricacao;
-            e.numero_lote = this.numero_lote;
-            e.produto = this.produto;
-            console.log(header)
-            axios.post('/springRest/api/novoEstoque',e,header).then(res =>{
-=======
             console.log(this.data_nota_fiscal);
             e.data_entrada = this.data_entrada;
             e.data_fabricacao = this.data_fabricacao;
@@ -207,7 +115,6 @@ export default{
                 'Access-Control-Allow-Origin': 'http://localhost:8080',
                 'Authorization': 'Bearer '+this.token,
                 'Content-Type': 'application/json' }}).then(res =>{
->>>>>>> f0980d10361fed3396f42a8b91acbb58fc51952f
                     console.log('ok',res);
                     this.nota_fiscal = '';
                     this.data_nota_fiscal = '';
@@ -239,10 +146,6 @@ export default{
         if(mm.toString().length<2){
             mm = "0"+mm.toString();
         }
-<<<<<<< HEAD
-        this.data_entrada = yy+"-"+mm+"-"+dd;
-        
-=======
         if(dd.toString().length<2){
             dd = "0"+dd.toString();
         }
@@ -254,7 +157,6 @@ export default{
           this.produtos = res.data
         })
         .catch(error => console.log(error))
->>>>>>> f0980d10361fed3396f42a8b91acbb58fc51952f
         this.atualizar();
     }
 }
@@ -287,8 +189,4 @@ export default{
     border-radius: 7px;
     margin-top: 10px;
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> f0980d10361fed3396f42a8b91acbb58fc51952f
 </style>

@@ -88,11 +88,6 @@ export default{
                 nomeAutorizacao:aut
             } 
             if(this.usuario==null){
-<<<<<<< HEAD
-            axios.post('/springRest/usuario/novoUsuario/',{nome:this.nome,senha:this.senha,nomeAutorizacao:aut},header).then(res =>{
-                    console.log(res);   
-                    this.atualizar();                 
-=======
             axios.post('/springRest/usuario/novoUsuario/',{nome:this.nome,senha:this.senha,nomeAutorizacao:aut},
                 {headers:{
                     'Access-Control-Allow-Origin': 'http://localhost:8080',
@@ -100,7 +95,6 @@ export default{
                 }}).then(res =>{
                     console.log(res);   
                     this.atualizar();                   
->>>>>>> f0980d10361fed3396f42a8b91acbb58fc51952f
                 }).catch(error =>{
                     console.log('erro',error)
                 })
@@ -108,14 +102,10 @@ export default{
                     var usuario = new Object();
                     usuario.nome = this.nome;
                     usuario.senha = this.senha;
-<<<<<<< HEAD
-                    axios.put('/springRest/usuario/editaUsuario/'+this.usuario.id, usuario,header).then(res =>{
-=======
                     axios.put('/springRest/usuario/editaUsuario/'+this.usuario.id, usuario,{headers:{
                     'Access-Control-Allow-Origin': 'http://localhost:8080',
                     'Authorization': 'Bearer '+this.token
                 }}).then(res =>{
->>>>>>> f0980d10361fed3396f42a8b91acbb58fc51952f
                     console.log(res);
                     this.atualizar();
                     this.usuario = null;
@@ -124,15 +114,10 @@ export default{
                     })               
 
             }
-<<<<<<< HEAD
-           
-        },
-=======
             this.usuario = null; 
             this.nome = '';
             this.senha = ''; 
             },
->>>>>>> f0980d10361fed3396f42a8b91acbb58fc51952f
         editar(usuario){
             this.usuario = usuario; 
             this.nome = usuario.nome;
@@ -143,14 +128,10 @@ export default{
                     'Access-Control-Allow-Origin': 'http://localhost:8080',
                     'Token': 'Baerer '+this.token
                 }
-<<<<<<< HEAD
-        axios.delete('springRest/usuario/deleteUsuario/'+id, header)
-=======
         axios.delete('springRest/usuario/deleteUsuario/'+id, {headers:{
                     'Access-Control-Allow-Origin': 'http://localhost:8080',
                     'Authorization': 'Bearer '+this.token
                 }})
->>>>>>> f0980d10361fed3396f42a8b91acbb58fc51952f
             .then(res => {
             console.log(res);
             this.atualizar();
