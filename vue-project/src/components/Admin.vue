@@ -201,7 +201,7 @@ export default {
     deletar(id){
       var header = {
                 'Access-Control-Allow-Origin': 'http://localhost:8080',
-                'Token': 'Baerer '+this.token
+                'Token': 'Bearer '+this.token
             }
        axios.delete('springRest/api/deleteProduto/'+id, header)
         .then(res => {

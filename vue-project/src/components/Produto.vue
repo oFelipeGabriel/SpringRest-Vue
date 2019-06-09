@@ -54,7 +54,7 @@ export default{
                 'Access-Control-Allow-Origin': 'http://localhost:8080',
                 'Token': 'Baerer '+this.token
             }
-            if(this.produto.id!=null){
+            if(this.produto!= null && this.produto.id!=null){
                 p.id = this.produto.id;
                 axios.put('/springRest/api/editaProduto/'+this.produto.id,p,header).then(res =>{
                     console.log(res);

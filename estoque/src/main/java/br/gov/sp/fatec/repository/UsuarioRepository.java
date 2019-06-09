@@ -11,6 +11,8 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Long> {
 
 	public Usuario findByNome(String nome);
 	
+	public Usuario findById(long id);
+	
 	public List<Usuario> findByNomeContainsIgnoreCase(String nome);
 	
 	public Usuario findTop1ByNomeContains(String nome);

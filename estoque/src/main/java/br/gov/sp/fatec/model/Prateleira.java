@@ -4,6 +4,7 @@ package br.gov.sp.fatec.model;
 import java.io.Serializable;
 import java.sql.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 
@@ -27,16 +30,28 @@ public class Prateleira implements Serializable{
     private Long id;
     
     private long nota_fiscal;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date data_nota_fiscal;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date data_entrada;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date data_fabricacao;
-    private long numero_lote;
+    @Column(name="data_validade")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date validade;
+	private long numero_lote;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_produto")
     private Produto produto;
     
     
+	public Date getValidade() {
+		return validade;
+	}
+	public void setValidade(Date validade) {
+		this.validade = validade;
+	}
 	public Produto getProduto() {
 		return produto;
 	}

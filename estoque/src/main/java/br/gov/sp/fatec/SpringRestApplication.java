@@ -13,14 +13,5 @@ public class SpringRestApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpringRestApplication.class, args);
 	}
-	@SuppressWarnings("deprecation")
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-	  return new WebMvcConfigurerAdapter() {
-	    @Override
-	    public void addCorsMappings(CorsRegistry registry) {
-	      registry.addMapping("/*").allowedOrigins("http://localhost:8080");
-	    }
-	  };
-	}
+	
 }

@@ -60,6 +60,13 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 	
 	@Override
+	public Usuario apagar(long id) {
+		Usuario u = usuarioRepo.findById(id);
+		usuarioRepo.delete(u);
+		return u;
+	}
+	
+	@Override
 	@PreAuthorize("isAuthenticated()")
 	public Usuario buscar(Long id) {
 		Optional<Usuario> usuario =  usuarioRepo.findById(id);

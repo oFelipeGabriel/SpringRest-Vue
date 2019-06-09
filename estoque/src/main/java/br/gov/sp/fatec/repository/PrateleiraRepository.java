@@ -10,4 +10,6 @@ public interface PrateleiraRepository extends JpaRepository<Prateleira, Long>{
 	List<Prateleira> findAll();
 	
 	Prateleira findById(long id);
+	
+	List<Prateleira> findAllByOrderByValidadeAsc();
 }
