@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: estoque
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: Vinicius Lelis
+Built-By: felipe
 Implementation-Vendor-Id: br.gov.sp.fatec
-Build-Jdk: 1.8.0_191
+Build-Jdk: 1.8.0_181
 Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
  ot-starter-parent/estoque
 Created-By: Maven Integration for Eclipse
