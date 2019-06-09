@@ -12,6 +12,8 @@ public interface UsuarioService {
 	
 	public Usuario buscar(Long id);
 	
+	public Usuario apagar(long id);
+	
 	public List<Usuario> todos();
 	
 	public Usuario apagar(long id);

@@ -33,12 +33,21 @@ const router = new Router({
       path: '/Usuario',
       name: 'usuario',
       component: () => import('./views/Usuario.vue')
+<<<<<<< HEAD
     }, 
     {
       path: '/Estoque',
       name: 'estoque',
       component: () => import('./views/Estoque.vue')
     }, 
+=======
+    },
+    {
+    path: '/Estoque',
+    name: 'estoque',
+    component: () => import('./views/Estoque.vue')
+  }, 
+>>>>>>> f0980d10361fed3396f42a8b91acbb58fc51952f
   ]
   
 })

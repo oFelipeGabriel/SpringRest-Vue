@@ -61,6 +61,7 @@ CREATE TABLE `prateleira` (
   `data_entrada` date DEFAULT NULL,
   `data_fabricacao` date DEFAULT NULL,
   `data_nota_fiscal` date DEFAULT NULL,
+  `data_validade` date DEFAULT NULL,
   `nota_fiscal` bigint(20) NOT NULL,
   `numero_lote` bigint(20) NOT NULL,
   `id_produto` bigint(20) DEFAULT NULL

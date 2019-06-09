@@ -99,10 +99,16 @@ public class UsuarioController {
 		String senha = json.get("senha").asText();
 		String nomeAutorizacao = json.get("nomeAutorizacao").asText();
 		Usuario usuario = new Usuario();
+<<<<<<< HEAD
 		System.out.println(senha);
+=======
+		String nome = json.get("nome").asText();
+		String senha = json.get("senha").asText();
+		String nomeAutorizacao = json.get("nomeAutorizacao").asText();
+		usuario.setAutorizacoes(new ArrayList<Autorizacao>());
+>>>>>>> f0980d10361fed3396f42a8b91acbb58fc51952f
 		usuario.setNome(nome);
 		usuario.setSenha(md5(senha));
-		usuario.setAutorizacoes(new ArrayList<Autorizacao>());
 		if(nomeAutorizacao.equals("ROLE_ADMIN")){
 			Autorizacao autorizacao = autorizacaoRepo.findByNome(nomeAutorizacao);
 			usuario.getAutorizacoes().add(autorizacao);			
@@ -113,7 +119,11 @@ public class UsuarioController {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		return new ResponseEntity<Usuario>(usuario, responseHeaders, HttpStatus.CREATED);
 	}
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> f0980d10361fed3396f42a8b91acbb58fc51952f
 	@CrossOrigin
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PutMapping("/editaUsuario/{id}")
@@ -123,7 +133,11 @@ public class UsuarioController {
 		usuario.setSenha(u.getSenha());
 		return usuarioRepo.save(usuario);
 	}
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> f0980d10361fed3396f42a8b91acbb58fc51952f
 	@CrossOrigin
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(path="/deleteUsuario/{id}",method=RequestMethod.DELETE)
