@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import VuexPersist from 'vuex-persist'
 import router from './router';
-import { nextTick } from 'q';
+
 
 Vue.use(Vuex)
 
