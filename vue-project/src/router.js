@@ -38,17 +38,34 @@ const router = new Router({
     path: '/Estoque',
     name: 'estoque',
     component: () => import('./views/Estoque.vue')
+  },
+  {
+    path: '/Logout',
+    name: 'logout',
   }, 
   ]
   
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.fullPath === '/User') {
+  if (to.fullPath === '/Admin') {
     if (!store.state.temToken) {
       next('/login');
     }
   }
+  else if (to.fullPath === '/Gerenciar') {
+    if (!store.state.temToken) {
+      next('/login');
+    }
+  }
+  else if (to.fullPath === '/Logout') {
+    if (!store.state.temToken) {
+      store.commit('logout')
+      next('/login');
+    }
+  }
+
+  
   next();
 });
 
