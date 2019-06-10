@@ -79,8 +79,8 @@ export default{
                 aut = "ROLE_USUARIO";
             }
             var header = {
-                'Access-Control-Allow-Origin': 'http://localhost:8080',
-                'Authorization': 'Baerer '+this.token
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': 'Bearer '+this.token
             }
             var body = {
                 nome:this.nome,
@@ -90,7 +90,7 @@ export default{
             if(this.usuario==null){
             axios.post('/springRest/usuario/novoUsuario/',{nome:this.nome,senha:this.senha,nomeAutorizacao:aut},
                 {headers:{
-                    'Access-Control-Allow-Origin': 'http://localhost:8080',
+                    'Access-Control-Allow-Origin': '*',
                     'Authorization': 'Bearer '+this.token
                 }}).then(res =>{
                     console.log(res);   

@@ -63,7 +63,8 @@ export default {
           },
           {
             headers:{
-              "Content-type":"application/json"
+              "Content-type":"application/json",
+              'Access-Control-Allow-Origin': '*',
             }
           })
         .then(res => {
