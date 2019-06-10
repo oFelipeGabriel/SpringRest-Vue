@@ -1,48 +1,71 @@
 <template>
-<section class="section">
-    <div class="box has-text-centered is-3">
-    <h1>Estoque</h1>
-    <div class="select">
-    <label class="label" for="produto">Produto: </label>
-    <select class="select" v-model="produto">
-        <option v-for="produto in produtos" :value="produto" :key="produto.id">{{produto.nome}}</option>
-    </select></div>
-    <div class="control">
-    <label class="label" for="nota_fiscal">Nº Nota Fiscal</label>
-    <input class="input" type="number" v-model="nota_fiscal"></div>
-     <div class="control">
-    <label class="label" for="data_nota_fiscal">Data da Nota Fiscal</label>
-    <input class="input" type="date" v-model="data_nota_fiscal"></div>
-    <div class="control">
-    <label class="label" for="data_entrada">Data de Entrada</label>
-    <input class="input" type="date" v-model="data_entrada"></div>
-    <div class="control">
-    <label class="label" for="data_fabricacao">Data de Fabricação</label>
-    <input class="input" type="date" v-model="data_fabricacao"></div>
-    <div class="control">
-    <label class="label" for="numero_lote">Número do Lote</label>
-    <input class="input" type="number" v-model="numero_lote"></div>
-    <a class="button is-primary" @click="cadastrar">Cadastrar</a>
-    <h1 style="font-size:25px; padding-bottom: 15px" align="center"> Lista de items </h1>
-    <!-- Aplicar loop aqui!-->
-    <div class="box content">
-        <table>
-            <tr v-for="produto in estoque_un" :key="produto.id">
-                <article  style="padding-bottom: 10px;" class="post has-shadow">
-                    <h3>Produto: {{ produto.produto.nome }}</h3>
-                    <h4>Data de entrada: {{ produto.data_entrada.getDate() }}/{{produto.data_entrada.getMonth()+1}}/{{produto.data_entrada.getFullYear()}}</h4>
-                    <h4>Data da nota fiscal: {{ produto.data_nota_fiscal.getDate() }}/{{produto.data_nota_fiscal.getMonth()+1}}/{{produto.data_nota_fiscal.getFullYear() }}</h4>
-                    <h4>Data de fabricação: {{ produto.data_fabricacao.getDate() }}/{{produto.data_fabricacao.getMonth()+1}}/{{produto.data_fabricacao.getFullYear() }}</h4>
-                    <h4>Data de validade: {{ produto.prazo_validade.getDate() }}/{{produto.prazo_validade.getMonth()+1}}/{{produto.prazo_validade.getFullYear() }}</h4>
-                    
+<div>
+    <section class="section">
+        <div class="box has-text-centered is-3">
+        <h1>Estoque</h1>
+        <div class="select">
+        <label class="label" for="produto">Produto: </label>
+        <select class="select" v-model="produto">
+            <option v-for="produto in produtos" :value="produto" :key="produto.id">{{produto.nome}}</option>
+        </select></div>
+        <div class="control">
+        <label class="label" for="nota_fiscal">Nº Nota Fiscal</label>
+        <input class="input" type="number" v-model="nota_fiscal"></div>
+        <div class="control">
+        <label class="label" for="data_nota_fiscal">Data da Nota Fiscal</label>
+        <input class="input" type="date" v-model="data_nota_fiscal"></div>
+        <div class="control">
+        <label class="label" for="data_entrada">Data de Entrada</label>
+        <input class="input" type="date" v-model="data_entrada"></div>
+        <div class="control">
+        <label class="label" for="data_fabricacao">Data de Fabricação</label>
+        <input class="input" type="date" v-model="data_fabricacao"></div>
+        <div class="control">
+        <label class="label" for="numero_lote">Número do Lote</label>
+        <input class="input" type="number" v-model="numero_lote"></div>
+        <a class="button is-primary" @click="cadastrar">Cadastrar</a>
+        <h1 style="font-size:25px; padding-bottom: 15px" align="center"> Lista de items </h1>
+        <!-- Aplicar loop aqui!-->
+    <!-- <div class="box content">
+            <table>
+                <tr v-for="produto in estoque_un" :key="produto.id">
+                    <article  style="padding-bottom: 10px;" class="post has-shadow">
+                        <h3>Produto: {{ produto.produto.nome }}</h3>
+                        <h4>Data de entrada: {{ produto.data_entrada.getDate() }}/{{produto.data_entrada.getMonth()+1}}/{{produto.data_entrada.getFullYear()}}</h4>
+                        <h4>Data da nota fiscal: {{ produto.data_nota_fiscal.getDate() }}/{{produto.data_nota_fiscal.getMonth()+1}}/{{produto.data_nota_fiscal.getFullYear() }}</h4>
+                        <h4>Data de fabricação: {{ produto.data_fabricacao.getDate() }}/{{produto.data_fabricacao.getMonth()+1}}/{{produto.data_fabricacao.getFullYear() }}</h4>
+                        <h4>Data de validade: {{ produto.prazo_validade.getDate() }}/{{produto.prazo_validade.getMonth()+1}}/{{produto.prazo_validade.getFullYear() }}</h4>
+                        
 
-                </article>
-            </tr>
-        </table>
+                    </article>
+                </tr>
+            </table>
+        </div>
+            -->
+                
+    
     </div>
-        <!-- Final do loop !-->
+    </section>
+
+    <v-timeline>
+        <v-timeline-item  v-for="produto in estoque_un" :key="produto.id" color="green lighten-3" large>
+            <v-card class="elevation-6">
+                <v-card-title class="headline">{{ produto.produto.nome }}</v-card-title>
+                <v-card-text>
+                        Data de entrada: {{ produto.data_entrada.getDate() }}/{{produto.data_entrada.getMonth()+1}}/{{produto.data_entrada.getFullYear()}}
+                        <br>
+                        Data da nota fiscal: {{ produto.data_nota_fiscal.getDate() }}/{{produto.data_nota_fiscal.getMonth()+1}}/{{produto.data_nota_fiscal.getFullYear() }}
+                        <br>
+                        Data de fabricação: {{ produto.data_fabricacao.getDate() }}/{{produto.data_fabricacao.getMonth()+1}}/{{produto.data_fabricacao.getFullYear() }}
+                        <br>
+                        Data de validade: {{ produto.prazo_validade.getDate() }}/{{produto.prazo_validade.getMonth()+1}}/{{produto.prazo_validade.getFullYear() }}
+                </v-card-text>
+            </v-card>
+        </v-timeline-item>
+            
+    </v-timeline>
+
 </div>
-</section>
 </template>
 
 <script>
@@ -63,7 +86,7 @@ export default{
             currentDate: new Date()
         }
     },
-    methods:{
+    methods:{        
         atualizar () {
             
             axios.get('springRest/apiEstoque/prateleiras/', 
