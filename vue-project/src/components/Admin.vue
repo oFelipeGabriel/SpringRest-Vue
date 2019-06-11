@@ -5,9 +5,9 @@
     <!-- Início caixa de busca !-->
    <v-parallax  height="300" src="https://cdn.vuetifyjs.com/images/parallax/material.jpg">
 
-        <div class="hero-body">  
+        <div class="hero-body">
             <div align="center" class="container">
-                
+
                 <h1  align="center" style="font-size: 25px"> Pesquise algum item.. </h1>
                 <div class="card">
                     <div class="card-content">
@@ -30,10 +30,10 @@
     <!-- Final caixa de busca !-->
     <div class="container">
 			<div class="columns">
-        
+
 				<div class="column is-3">
                     <!-- Botão de add produto !-->
-					<a class="button is-success is-block is-alt is-large" @click="novo">
+					<a v-if="temAcesso" class="button is-success is-block is-alt is-large" @click="novo">
                         <span class="icon">
                             <i class="fa fa-inbox"></i>
                         </span>
@@ -45,10 +45,10 @@
                        <span class="icon">
                             <i class="fa fa-inbox"></i>
                         </span>
-                    
+
                         <span>Fora da Validade</span>
                     </a>
-		
+
 				</div>
 				<div class="column is-8">
          <!--  <v-alert class="notification is-success"
@@ -71,19 +71,19 @@
                                         <div class="media-content">
                                             <div class="content">
                                                 <p style="font-size: 18px"> Fornecedor:
-                                                    {{ produto.fornecedor }} 
-                                                    <br> 
+                                                    {{ produto.fornecedor }}
+                                                    <br>
                                                     Validade: {{ produto.periodo_validade }} dias </p>
-                                                    
+
                                             </div>
                                         </div>
                                         <!-- Botão de editar !-->
                                         <div style="padding-right: 35px; font-size: 20px; font-weight: 500">
                                         <span v-if="produto.temp_armazemnagem<=0" style="color:blue">{{ produto.temp_armazemnagem }} ºC</span>
-                                        <span v-else style="color:red">{{ produto.temp_armazemnagem }} ºC</span> 
+                                        <span v-else style="color:red">{{ produto.temp_armazemnagem }} ºC</span>
                                         </div>
-                                        <span class="button is-warning mr-3" @click="editar(produto)"> Editar</span>
-                                        <span class="button is-danger" @click="deletar(produto.id)"> Deletar</span>
+                                        <span v-if="temAcesso" class="button is-warning mr-3" @click="editar(produto)"> Editar</span>
+                                        <span v-if="temAcesso" class="button is-danger" @click="deletar(produto.id)"> Deletar</span>
                                         <!-- Botão de editar !-->
                                     </div>
                                 </article>
@@ -99,7 +99,7 @@
     <v-dialog
       v-model="dialog"
       width="500"
-      
+
     >
 
       <v-card>
@@ -111,12 +111,12 @@
         </v-card-title>
 
         <Produto @cadastrado="cadastrou" :produto="produto"></Produto>
-  
-        
+
+
       </v-card>
     </v-dialog>
   </div>
-    
+
 
 </div>
 
@@ -146,6 +146,7 @@ export default {
       dialog: false,
       alert: false,
       produto: null,
+      temAcesso: false,
     }
   },
   computed: {
@@ -171,14 +172,14 @@ export default {
     cadastrou(){
       this.dialog = false;
       this.atualizar();
-      this.alert = true; 
-      var self = this;    
+      this.alert = true;
+      var self = this;
       setTimeout(function(){ this.alert = false; }.bind(self), 5000);
     },
     buscar(){
       console.log(this.token);
       if(this.busca != ""){
-        axios.get('springRest/api/busca/'+this.busca, 
+        axios.get('springRest/api/busca/'+this.busca,
           this.header )
         .then(res => {
           console.log(res)
@@ -188,9 +189,9 @@ export default {
       }else{
         this.atualizar();
       }
-    },    
+    },
     atualizar () {
-      axios.get('springRest/api/produtos', 
+      axios.get('springRest/api/produtos',
           { headers: { Accept: 'application/json',
           'Access-Control-Allow-Origin': 'http://127.0.0.1:8080', } })
         .then(res => {
@@ -217,11 +218,15 @@ export default {
     },
     novo(){
       this.produto = null;
-      this.dialog = true;      
+      this.dialog = true;
     }
-  },  
+  },
   created () {
     this.atualizar()
+  },
+  mounted(){
+    this.temAcesso = this.$store.getters.isAdmin;
+    console.log(this.temAcesso);
   },
   computed:{
         token:{

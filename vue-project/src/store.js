@@ -18,7 +18,8 @@ export default new Vuex.Store({
   state: {
     usuario: null,
     token: null,
-    temToken: false
+    temToken: false,
+    admin: false,
   },
   mutations: {
     setUsuario (state, usuario) {
@@ -33,11 +34,22 @@ export default new Vuex.Store({
       state.usuario = null
       state.temToken = false
       router.push('/login');
+    },
+    setAdmin(state, admin){
+      state.admin = admin;
     }
   },
   actions: {
     temAcesso:()=>{
       localStorage.getItem('temToken')
+    },
+    isAdmin:()=>{
+      localStorage.getItem('admin')
+    }
+  },
+  getters:{
+    isAdmin: state =>{
+      return state.admin
     }
   }
 })

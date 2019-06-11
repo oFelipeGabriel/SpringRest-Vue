@@ -1,18 +1,23 @@
 <template>
 <div>
 <section class="section">
+  <v-btn v-show="!cadastrar && temAcesso" color="info" @click="novo()">Cadastrar</v-btn>
+  <v-dialog v-model="cadastrar"
+  width="500">
     <div class="box has-text-centered is-3">
         <div class="form-control">
             <label class="label">Nome:</label>
-            <input class="input" type="text" v-model="nome">
+            <v-text-field type="text" v-model="nome" label="Usuário"></v-text-field>
         </div>
         <div class="form-control">
         <label class="label">Senha:</label>
-        <input class="input" type="password" v-model="senha">
+        <v-text-field type="password" v-model="senha" label="Senha"></v-text-field>
         </div>
         <div class="form-control">
-        <label class="label">ADMIN:</label>
-        <input class="" type="checkbox" v-model="is_admin">
+        <v-checkbox
+          v-model="is_admin"
+          :label="`Admin`"
+        ></v-checkbox>
         </div>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -23,6 +28,7 @@
           </span>
           </v-card-actions>
     </div>
+  </v-dialog>
     </section>
 <div class="box content">
                         <table>
@@ -35,9 +41,9 @@
                                             <span v-else>USER</span>
                                         </p>
                                         <!-- Botão de editar !-->
-                                        
-                                        <span class="button is-warning mr-3" @click="editar(usuario)"> Editar</span>
-                                        <span class="button is-danger" @click="deletar(usuario.id)"> Deletar</span>
+
+                                        <span v-if="temAcesso" class="button is-warning mr-3" @click="editar(usuario)"> Editar</span>
+                                        <span v-if="temAcesso" class="button is-danger" @click="deletar(usuario.id)"> Deletar</span>
                                         <!-- Botão de editar !-->
                                     </div>
                                 </article>
@@ -58,12 +64,14 @@ export default{
             senha: '',
             is_admin: false,
             usuarios: [],
-            usuario: null
+            usuario: null,
+            cadastrar: false,
+            temAcesso: false,
         }
     },
     methods:{
          atualizar () {
-            axios.get('springRest/usuario/getAll', 
+            axios.get('springRest/usuario/getAll',
                 { headers: { Accept: 'application/json' } })
                 .then(res => {
                 console.log(res)
@@ -86,15 +94,15 @@ export default{
                 nome:this.nome,
                 senha:this.senha,
                 nomeAutorizacao:aut
-            } 
+            }
             if(this.usuario==null){
             axios.post('/springRest/usuario/novoUsuario/',{nome:this.nome,senha:this.senha,nomeAutorizacao:aut},
                 {headers:{
                     'Access-Control-Allow-Origin': 'http://localhost:8080',
                     'Authorization': 'Bearer '+this.token
                 }}).then(res =>{
-                    console.log(res);   
-                    this.atualizar();                   
+                    console.log(res);
+                    this.atualizar();
                 }).catch(error =>{
                     console.log('erro',error)
                 })
@@ -111,17 +119,17 @@ export default{
                     this.usuario = null;
                     }).catch(error =>{
                         console.log('erro',error)
-                    })               
+                    })
 
             }
-            this.usuario = null; 
+            this.usuario = null;
             this.nome = '';
-            this.senha = ''; 
+            this.senha = '';
             },
         editar(usuario){
-            this.usuario = usuario; 
+            this.usuario = usuario;
             this.nome = usuario.nome;
-            this.senha = usuario.senha;           
+            this.senha = usuario.senha;
         },
         deletar(id){
         var header = {
@@ -138,8 +146,10 @@ export default{
             })
             .catch(error => console.log(error))
         },
-            
-        
+        novo(){
+          this.cadastrar = true;
+        }
+
     },
     computed:{
         token:{
@@ -151,6 +161,9 @@ export default{
     created () {
         this.atualizar()
     },
+    mounted(){
+      this.temAcesso = this.$store.getters.isAdmin;
+    }
 }
 </script>
 
@@ -180,6 +193,9 @@ export default{
     padding: 5px 8px;
     border-radius: 7px;
     margin-top: 10px;
+}
+.v-btn{
+  background-color: #23d160 !important;
 }
 
 </style>

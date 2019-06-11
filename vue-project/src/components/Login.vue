@@ -7,7 +7,7 @@
                       <p class="subtitle has-text-grey">Faça login para continuar</p>
                       <img class="is-rounded" style="border-radius: 50%; margin-bottom: 20px" :src="require('../assets/logotipo.png')">
                       <div class="box">
-                          
+
                           <form @submit.prevent="login">
                               <div class="field">
                                   <div class="control">
@@ -20,7 +20,7 @@
                                       <input class="input is-large" name="password" type="password" placeholder="Your Password" required v-model="senha">
                                   </div>
                               </div>
-                  
+
                               <button type="submit" class="button is-block is-success is-large is-fullwidth">Login</button>
                           </form>
                       </div>
@@ -53,8 +53,17 @@ export default {
   methods: {
     ...mapMutations([
       'setUsuario',
-      'setToken'
+      'setToken',
+      'setAdmin'
     ]),
+    isAdmin(autorizacoes){
+      for(var x=0;x<autorizacoes.length;x++){
+        if(autorizacoes[x].authority=="ROLE_ADMIN"){
+          return true;
+        }
+      }
+      return false;
+    },
     login() {
       axios.post('/springRest/logando',
           {
@@ -70,6 +79,8 @@ export default {
           console.log(res)
           this.setUsuario(res.data)
           this.setToken(res.headers.token)
+          var admin = this.isAdmin(res.data.autorizacoes);
+          this.setAdmin(admin);
           console.log(this.$store.state.token);
           this.$router.push('/Admin')
         })

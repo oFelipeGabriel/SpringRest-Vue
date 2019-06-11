@@ -2,28 +2,41 @@
 <div>
     <section class="section">
         <div class="box has-text-centered is-3">
+          <v-btn v-show="!cadastrar && temAcesso" color="info" @click="novo()">Cadastrar</v-btn>
+      <v-dialog
+        v-model="cadastrar"
+        width="500"
+      >
+      <v-card>
         <h1>Estoque</h1>
-        <div class="select">
-        <label class="label" for="produto">Produto: </label>
-        <select class="select" v-model="produto">
-            <option v-for="produto in produtos" :value="produto" :key="produto.id">{{produto.nome}}</option>
-        </select></div>
+
+
+        <v-select v-model="produto"
+        label="Produto"
+        :items="produtos"
+        item-value='id'
+        item-text='nome'
+        single-line
+              bottom>
+        </v-select>
         <div class="control">
         <label class="label" for="nota_fiscal">Nº Nota Fiscal</label>
-        <input class="input" type="number" v-model="nota_fiscal"></div>
+        <v-text-field type="number" label="Número nota fiscal" v-model="nota_fiscal"></v-text-field></div>
         <div class="control">
         <label class="label" for="data_nota_fiscal">Data da Nota Fiscal</label>
-        <input class="input" type="date" v-model="data_nota_fiscal"></div>
+        <v-text-field type="date" v-model="data_nota_fiscal"></v-text-field></div>
         <div class="control">
         <label class="label" for="data_entrada">Data de Entrada</label>
-        <input class="input" type="date" v-model="data_entrada"></div>
+        <v-text-field type="date" v-model="data_entrada"></v-text-field></div>
         <div class="control">
         <label class="label" for="data_fabricacao">Data de Fabricação</label>
-        <input class="input" type="date" v-model="data_fabricacao"></div>
+        <v-text-field type="date" v-model="data_fabricacao"></v-text-field></div>
         <div class="control">
         <label class="label" for="numero_lote">Número do Lote</label>
-        <input class="input" type="number" v-model="numero_lote"></div>
+        <v-text-field type="number" label="Número do lote" v-model="numero_lote"></v-text-field></div>
         <a class="button is-primary" @click="cadastrar">Cadastrar</a>
+      </v-card>
+      </v-dialog>
         <h1 style="font-size:25px; padding-bottom: 15px" align="center"> Lista de items </h1>
         <!-- Aplicar loop aqui!-->
     <!-- <div class="box content">
@@ -35,15 +48,15 @@
                         <h4>Data da nota fiscal: {{ produto.data_nota_fiscal.getDate() }}/{{produto.data_nota_fiscal.getMonth()+1}}/{{produto.data_nota_fiscal.getFullYear() }}</h4>
                         <h4>Data de fabricação: {{ produto.data_fabricacao.getDate() }}/{{produto.data_fabricacao.getMonth()+1}}/{{produto.data_fabricacao.getFullYear() }}</h4>
                         <h4>Data de validade: {{ produto.prazo_validade.getDate() }}/{{produto.prazo_validade.getMonth()+1}}/{{produto.prazo_validade.getFullYear() }}</h4>
-                        
+
 
                     </article>
                 </tr>
             </table>
         </div>
             -->
-                
-    
+
+
     </div>
     </section>
 
@@ -62,7 +75,7 @@
                 </v-card-text>
             </v-card>
         </v-timeline-item>
-            
+
     </v-timeline>
 
 </div>
@@ -83,15 +96,17 @@ export default{
             data_entrada: '',
             data_fabricacao: '',
             numero_lote: '',
-            currentDate: new Date()
+            currentDate: new Date(),
+            cadastrar: false,
+            temAcesso: false,
         }
     },
-    methods:{        
+    methods:{
         atualizar () {
-            
-            axios.get('springRest/apiEstoque/prateleiras/', 
-            { headers: { 
-                'Access-Control-Allow-Origin': 'http://localhost:8080',
+
+            axios.get('springRest/apiEstoque/prateleiras/',
+            { headers: {
+                'Access-Control-Allow-Origin': '8',
                 'Authorization': 'Bearer '+this.token,
                 'Accept': 'application/json' }})
             .then(res => {
@@ -119,7 +134,7 @@ export default{
             }
             })
             .catch(error => console.log(error))
-        
+
             },
         cadastrar(){
              var header = {
@@ -133,7 +148,7 @@ export default{
             e.data_entrada = this.data_entrada;
             e.data_fabricacao = this.data_fabricacao;
             e.numero_lote = this.numero_lote;
-            e.id_produto = this.produto.id;
+            e.id_produto = this.produto;
             axios.post('/springRest/apiEstoque/novoEstoque/',e,{headers:{
                 'Access-Control-Allow-Origin': 'http://localhost:8080',
                 'Authorization': 'Bearer '+this.token,
@@ -145,9 +160,13 @@ export default{
                     this.data_fabricacao = '';
                     this.numero_lote = '';
                     this.atualizar();
+                    this.cadastrar = false;
                 }).catch(error =>{
                     console.log('erro',error)
                 })
+        },
+        novo(){
+          this.cadastrar = true;
         }
     },
     computed:{
@@ -158,10 +177,11 @@ export default{
         }
     },
     created () {
-        
-             
+
+
     },
     mounted(){
+      this.temAcesso = this.$store.getters.isAdmin;
         var data = new Date();
         var dd = data.getDate();
         var mm = data.getMonth()+1;
@@ -173,7 +193,7 @@ export default{
             dd = "0"+dd.toString();
         }
         this.data_entrada = yy+"-"+mm+"-"+dd;
-       axios.get('springRest/api/produtos', 
+       axios.get('springRest/api/produtos',
           { headers: { Accept: 'application/json' } })
         .then(res => {
           console.log(res)
@@ -211,5 +231,12 @@ export default{
     padding: 5px 8px;
     border-radius: 7px;
     margin-top: 10px;
+}
+.menuable__content__active{
+  top:20px !important;
+  left: 0 !important;
+}
+.v-btn{
+  background-color: #2196f3 !important;
 }
 </style>
