@@ -31,13 +31,6 @@ public class PrateleiraResources {
 	@Autowired
 	PrateleiraRepository prateleiraRepository;
 	
-	@CrossOrigin
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@Transactional
-	@GetMapping("/prateleiras")
-	public List<Prateleira> listaPrateleiras(){
-		return prateleiraRepository.findAllByOrderByValidadeAsc();
-	}
 
 	@CrossOrigin
 	@Transactional

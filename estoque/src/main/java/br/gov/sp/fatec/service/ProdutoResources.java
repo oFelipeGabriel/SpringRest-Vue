@@ -57,7 +57,6 @@ public class ProdutoResources {
 	}
 	
 	@CrossOrigin
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@Transactional
 	@GetMapping("/produtos")
 	public List<Produto> listaProdutos(){

@@ -3,21 +3,21 @@
     <section class="section">
         <div class="box has-text-centered is-3">
           <v-btn v-show="!cadastrar && temAcesso" color="info" @click="novo()">Cadastrar</v-btn>
-      <v-dialog
-        v-model="cadastrar"
-        width="500"
-      >
-      <v-card>
+
         <h1>Estoque</h1>
 
-
+        <v-dialog
+              v-model="cadastrar"
+              width="500"
+            >
+            <v-card>
         <v-select v-model="produto"
         label="Produto"
         :items="produtos"
         item-value='id'
         item-text='nome'
         single-line
-              bottom>
+          >
         </v-select>
         <div class="control">
         <label class="label" for="nota_fiscal">Nº Nota Fiscal</label>
@@ -34,9 +34,9 @@
         <div class="control">
         <label class="label" for="numero_lote">Número do Lote</label>
         <v-text-field type="number" label="Número do lote" v-model="numero_lote"></v-text-field></div>
-        <a class="button is-primary" @click="cadastrar">Cadastrar</a>
+        <a class="button is-primary" @click="cadastre">Cadastrar</a>
       </v-card>
-      </v-dialog>
+    </v-dialog>
         <h1 style="font-size:25px; padding-bottom: 15px" align="center"> Lista de items </h1>
         <!-- Aplicar loop aqui!-->
     <!-- <div class="box content">
@@ -99,6 +99,8 @@ export default{
             currentDate: new Date(),
             cadastrar: false,
             temAcesso: false,
+            cadastrando: false,
+            app: this,
         }
     },
     methods:{
@@ -136,7 +138,7 @@ export default{
             .catch(error => console.log(error))
 
             },
-        cadastrar(){
+        cadastre(){
              var header = {
                 'Access-Control-Allow-Origin': '*',
                 'Token': 'Bearer '+this.token
@@ -150,7 +152,7 @@ export default{
             e.numero_lote = this.numero_lote;
             e.id_produto = this.produto;
             axios.post('/springRest/apiEstoque/novoEstoque/',e,{headers:{
-                'Access-Control-Allow-Origin': 'http://localhost:8080',
+                'Access-Control-Allow-Origin': '*',
                 'Authorization': 'Bearer '+this.token,
                 'Content-Type': 'application/json' }}).then(res =>{
                     console.log('ok',res);
@@ -164,6 +166,7 @@ export default{
                 }).catch(error =>{
                     console.log('erro',error)
                 })
+                this.cadastrando = false;
         },
         novo(){
           this.cadastrar = true;
@@ -201,7 +204,8 @@ export default{
         })
         .catch(error => console.log(error))
         this.atualizar();
-    }
+    },
+
 }
 </script>
 
@@ -233,8 +237,8 @@ export default{
     margin-top: 10px;
 }
 .menuable__content__active{
-  top:20px !important;
-  left: 0 !important;
+  top:55px !important;
+  left: 30% !important;
 }
 .v-btn{
   background-color: #2196f3 !important;

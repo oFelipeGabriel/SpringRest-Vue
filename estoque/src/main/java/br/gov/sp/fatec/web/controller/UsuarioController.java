@@ -5,16 +5,13 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,20 +19,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import br.gov.sp.fatec.model.Autorizacao;
-import br.gov.sp.fatec.model.Produto;
 import br.gov.sp.fatec.model.Usuario;
 import br.gov.sp.fatec.repository.AutorizacaoRepository;
 import br.gov.sp.fatec.repository.UsuarioRepository;
 import br.gov.sp.fatec.service.UsuarioService;
-import br.gov.sp.fatec.view.View;
 
 @RestController
 @CrossOrigin
@@ -101,6 +94,8 @@ public class UsuarioController {
 		Usuario usuario = new Usuario();
 		usuario.setNome(nome);
 		usuario.setSenha(md5(senha));
+		List<Autorizacao> lista = new ArrayList<>();
+		usuario.setAutorizacoes(lista);
 		if(nomeAutorizacao.equals("ROLE_ADMIN")){
 			Autorizacao autorizacao = autorizacaoRepo.findByNome(nomeAutorizacao);
 			usuario.getAutorizacoes().add(autorizacao);			

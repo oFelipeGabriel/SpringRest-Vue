@@ -5,6 +5,9 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -13,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,6 +45,13 @@ public class PrateleiraController {
 			Date data_nota_fiscal, Date data_entrada, Date data_fabricacao,
 			long numero_lote, long id_produto
 	 */
+
+	@CrossOrigin
+	@GetMapping("/prateleiras")
+	public List<Prateleira> listaPrateleiras(){
+		return prateleiraRepo.findAllByOrderByValidadeAsc();
+	}
+	
 	@CrossOrigin
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/novoEstoque", method = RequestMethod.POST)
