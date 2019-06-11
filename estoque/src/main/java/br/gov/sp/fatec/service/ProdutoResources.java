@@ -58,6 +58,7 @@ public class ProdutoResources {
 	
 	@CrossOrigin
 	@Transactional
+	@PreAuthorize("hasRole('ROLE_USUARIO')")
 	@GetMapping("/produtos")
 	public List<Produto> listaProdutos(){
 		return produtoRepository.findAllByOrderByNomeAsc();

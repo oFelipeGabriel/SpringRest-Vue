@@ -23,7 +23,7 @@
           <v-spacer></v-spacer>
           <span
             class="botao-cadastrar"
-            @click="cadastrar"
+            @click="cadastre"
           >Cadastrar
           </span>
           </v-card-actions>
@@ -79,7 +79,7 @@ export default{
                 })
                 .catch(error => console.log(error))
             },
-        cadastrar(){
+        cadastre(){
             var aut = '';
             if(this.is_admin==true){
                 aut = "ROLE_ADMIN";
@@ -127,6 +127,7 @@ export default{
             this.senha = '';
             },
         editar(usuario){
+            this.cadastrar = true;
             this.usuario = usuario;
             this.nome = usuario.nome;
             this.senha = usuario.senha;

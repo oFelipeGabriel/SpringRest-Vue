@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import br.gov.sp.fatec.model.Autorizacao;
 import br.gov.sp.fatec.model.Usuario;
@@ -55,6 +56,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 
 	@Override
+	@PreAuthorize("hasRole('ROLE_USUARIO')")
+	@CrossOrigin
 	public List<Usuario> buscar(String nome) {
 		return usuarioRepo.findByNomeContainsIgnoreCase(nome);
 	}

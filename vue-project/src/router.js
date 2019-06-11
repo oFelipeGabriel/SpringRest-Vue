@@ -42,9 +42,9 @@ const router = new Router({
   {
     path: '/Logout',
     name: 'logout',
-  }, 
+  },
   ]
-  
+
 })
 
 router.beforeEach((to, from, next) => {
@@ -65,9 +65,8 @@ router.beforeEach((to, from, next) => {
     }
   }
 
-  
+
   next();
 });
 
 export default router;
-

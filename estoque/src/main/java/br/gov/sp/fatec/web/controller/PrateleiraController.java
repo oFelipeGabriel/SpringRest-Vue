@@ -47,6 +47,7 @@ public class PrateleiraController {
 	 */
 
 	@CrossOrigin
+	@PreAuthorize("hasRole('ROLE_USUARIO')")
 	@GetMapping("/prateleiras")
 	public List<Prateleira> listaPrateleiras(){
 		return prateleiraRepo.findAllByOrderByValidadeAsc();

@@ -154,6 +154,8 @@ INSERT INTO autorizacao(nome) VALUES('ROLE_ADMIN');
 INSERT INTO usuario_autorizacao(usuario_id, autorizacao_id) VALUES(
 (SELECT id FROM usuario WHERE nome = 'admin'),
 (SELECT id FROM autorizacao WHERE nome = 'ROLE_ADMIN'));
-
+INSERT INTO usuario_autorizacao(usuario_id, autorizacao_id) VALUES(
+(SELECT id FROM usuario WHERE nome = 'admin'),
+(SELECT id FROM autorizacao WHERE nome = 'ROLE_USUARIO'));
 CREATE USER IF NOT EXISTS 'newuser'@'localhost' IDENTIFIED BY 'password';
 GRANT ALL PRIVILEGES ON estoque.* TO 'newuser'@'localhost';
